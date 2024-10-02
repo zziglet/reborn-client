@@ -16,21 +16,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-//데이터 모델
+// 데이터 모델
 data class KakaoLoginRequest(
-    val accessToken: String,
-    val userId: Long,
-    val nickname: String?
+    val authorizationCode: String // authorizationCode만 포함
 )
 
-//api 호출 -> POST request
+// API 호출 -> POST request
 interface ApiService {
-    @POST("auth/kakao")
+    @POST("https://re-born.asia/api/auth/kakao")
     fun sendKakaoToken(@Body request: KakaoLoginRequest): Call<Void>
 }
 
 object RetrofitClient {
-    private const val BASE_URL = "http://localhost:3000" // 서버 URL
+    private const val BASE_URL = "https://re-born.asia" // 서버 URL
 
     val instance: ApiService by lazy {
         val retrofit = Retrofit.Builder()
@@ -42,9 +40,9 @@ object RetrofitClient {
     }
 }
 
-//[todo] : login view 출력 -> 추후에 screen package로 이동할 예정
+// [todo]: login view 출력 -> 추후에 screen package로 이동할 예정
 @Composable
-fun LoginScreen(hosts: List<String>) {
+fun LoginScreen() {
     // LocalContext를 사용하여 현재 Context 가져오기
     val context = LocalContext.current
 
@@ -53,59 +51,41 @@ fun LoginScreen(hosts: List<String>) {
         verticalArrangement = Arrangement.Center,
     ) {
         Button(
-            onClick = { loginWithKakao(context, hosts) },
+            onClick = { loginWithKakao(context) }, // hosts 파라미터 제거
         ) {
             Text("카카오 로그인")
         }
     }
 }
 
-//[todo] : 카카오톡으로 로그인 요청(에뮬레이터에 카카오톡 어플 설치 및 로그인 필요)
-private fun loginWithKakao(context: Context, hosts: List<String>) {
+// [todo]: 카카오톡으로 로그인 요청(에뮬레이터에 카카오톡 어플 설치 및 로그인 필요)
+private fun loginWithKakao(context: Context) {
     UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
         if (error != null) {
             Log.e("Login", "Login Failed: ${error.message}")
         } else if (token != null) {
-            fetchUserInfo(token.accessToken, hosts[2]) // user info URL
+            Log.d("Login code", token.accessToken)
+            sendTokenToServer(token.accessToken) // accessToken 대신 authorizationCode 사용
         }
     }
 }
 
-//[todo] : 로그인 성공 시 사용자 정보 요청
-private fun fetchUserInfo(accessToken: String, userInfoUrl: String) {
-    UserApiClient.instance.me { user, error ->
-        if (error != null) {
-            Log.e("UserInfo", "Failed to fetch user info: ${error.message}")
-        } else if (user != null) {
-            val userId = user.id
-            val nickname = user.kakaoAccount?.profile?.nickname
-            sendTokenToServer(accessToken, userId, nickname)
+// [todo]: 서버에 authorizationCode 전송
+private fun sendTokenToServer(authorizationCode: String) {
+    val request = KakaoLoginRequest(authorizationCode)
+
+    RetrofitClient.instance.sendKakaoToken(request).enqueue(object : retrofit2.Callback<Void> {
+        override fun onResponse(call: Call<Void>, response: retrofit2.Response<Void>) {
+            if (response.isSuccessful) {
+                Log.d("TokenSend", "Token sent successfully!")
+            } else {
+                Log.e("TokenSend", "Failed to send token: ${response.code()}")
+            }
         }
-    }
+
+        override fun onFailure(call: Call<Void>, t: Throwable) {
+            Log.e("TokenSend", "Network error: ${t.message}")
+        }
+    })
 }
-
-//[todo] : 서버에 access 토큰 전송
-private fun sendTokenToServer(accessToken: String, userId: Long?, nickname: String?) {
-    val request = userId?.let { KakaoLoginRequest(accessToken, it, nickname) }
-
-    if (request != null) {
-        RetrofitClient.instance.sendKakaoToken(request).enqueue(object : retrofit2.Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: retrofit2.Response<Void>) {
-                if (response.isSuccessful) {
-                    Log.d("TokenSend", "Token sent successfully!")
-                } else {
-                    Log.e("TokenSend", "Failed to send token: ${response.code()}")
-                }
-            }
-
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Log.e("TokenSend", "Network error: ${t.message}")
-            }
-        })
-    }
-}
-
-
-
-
 

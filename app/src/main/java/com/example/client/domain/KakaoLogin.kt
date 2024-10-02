@@ -1,14 +1,7 @@
-package com.example.client
+package com.example.client.domain
 
 import android.content.Context
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.platform.LocalContext
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -23,7 +16,7 @@ data class KakaoLoginRequest(
 
 // API 호출 -> POST request
 interface ApiService {
-    @POST("https://re-born.asia/api/auth/kakao")
+    @POST("re-born.asia/api/auth/kakao")
     fun sendKakaoToken(@Body request: KakaoLoginRequest): Call<Void>
 }
 
@@ -40,26 +33,9 @@ object RetrofitClient {
     }
 }
 
-// [todo]: login view 출력 -> 추후에 screen package로 이동할 예정
-@Composable
-fun LoginScreen() {
-    // LocalContext를 사용하여 현재 Context 가져오기
-    val context = LocalContext.current
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Button(
-            onClick = { loginWithKakao(context) }, // hosts 파라미터 제거
-        ) {
-            Text("카카오 로그인")
-        }
-    }
-}
 
 // [todo]: 카카오톡으로 로그인 요청(에뮬레이터에 카카오톡 어플 설치 및 로그인 필요)
-private fun loginWithKakao(context: Context) {
+fun loginWithKakao(context: Context) {
     UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
         if (error != null) {
             Log.e("Login", "Login Failed: ${error.message}")
@@ -88,4 +64,3 @@ private fun sendTokenToServer(authorizationCode: String) {
         }
     })
 }
-

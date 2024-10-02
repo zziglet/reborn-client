@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Client"
         tools:targetApi="31">
+
+        <!-- [todo] : 카카오 SDK 초기화를 위한 메타데이터 추가 -->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="47201909a709c3061d6001af828992d3" /> <!-- Client ID -->
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -19,7 +28,6 @@
             android:theme="@style/Theme.Client">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

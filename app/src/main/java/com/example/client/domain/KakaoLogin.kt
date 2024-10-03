@@ -42,6 +42,11 @@ fun loginWithKakao(context: Context) {
         } else if (token != null) {
             Log.d("Login code", token.accessToken)
             sendTokenToServer(token.accessToken) // accessToken 대신 authorizationCode 사용
+            UserInfo.fetchUserInfo { user ->
+                if (user != null) {
+                    Log.d("UserInfo", "User ID: ${user.userId}, Nickname: ${user.nickname}")
+                }
+            }
         }
     }
 }

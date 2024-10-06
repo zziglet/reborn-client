@@ -11,7 +11,7 @@ import retrofit2.http.POST
 
 // 데이터 모델
 data class KakaoLoginRequest(
-    val authorizationCode: String // authorizationCode만 포함
+    val accessToken: String
 )
 
 // API 호출 -> POST request
@@ -41,7 +41,7 @@ fun loginWithKakao(context: Context) {
             Log.e("Login", "Login Failed: ${error.message}")
         } else if (token != null) {
             Log.d("Login code", token.accessToken)
-            sendTokenToServer(token.accessToken) // accessToken 대신 authorizationCode 사용
+            sendTokenToServer(token.accessToken)
             UserInfo.fetchUserInfo { user ->
                 if (user != null) {
                     Log.d("UserInfo", "User ID: ${user.userId}, Nickname: ${user.nickname}")
@@ -51,7 +51,7 @@ fun loginWithKakao(context: Context) {
     }
 }
 
-// [todo]: 서버에 authorizationCode 전송
+// [todo]: 서버에 accessToken 전송
 private fun sendTokenToServer(authorizationCode: String) {
     val request = KakaoLoginRequest(authorizationCode)
 

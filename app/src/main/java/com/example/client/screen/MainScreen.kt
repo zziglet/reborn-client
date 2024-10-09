@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,9 +45,6 @@ fun MainScreen(){
         }
     }
 
-    //[todo] : 사용자가 최근에 본 정보와 유사한 공고 가져오기
-
-
     Column (
         modifier = Modifier.fillMaxSize()
             .background(color = Color(0xFFFFFBDC))
@@ -66,14 +64,12 @@ fun MainScreen(){
             modifier = Modifier.padding(top = 10.dp, start = 20.dp)
         ){
             val greetingText = buildAnnotatedString {
-                // 사용자 이름 부분 (굵게)
                 append("${nickname ?: "사용자"}")
                 addStyle(
                     SpanStyle(fontFamily = FontFamily(Font(R.font.pretendardextrabold))),
                     start = 0,
                     end = (nickname?.length ?: 3)) // "님," 포함
 
-                // 줄바꿈 및 인사말 부분 (굵게)
                 append("님,\n안녕하세요 !")
                 addStyle(SpanStyle(fontFamily = FontFamily(Font(R.font.pretendardregular))),
                     start = (nickname?.length ?: 4) + 3,
@@ -97,10 +93,11 @@ fun MainScreen(){
 
         }
 
+        //[todo] : main 기능 button 구현
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(493.dp)
+                .height(343.dp)
                 .padding(top = 25.dp)
                 .background(color = Color(0xFFFFFEF4), shape = RoundedCornerShape(size = 40.dp))
         ) {
@@ -129,6 +126,41 @@ fun MainScreen(){
                         .clickable {  }
                 )
             }
+        }
+
+        //todo : 사용자 맞춤 추천 정보 퍼블리싱 및 데이터 가져오기
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(493.dp)
+                .padding(top = 25.dp)
+                .background(color = Color(0xFFFFFBDC), shape = RoundedCornerShape(size = 40.dp))
+        ){
+            //추후에 데이터 가져올 것
+            Column {
+                Text(
+                    text = "이런 정보는 어떠세요?",
+                    fontFamily = FontFamily(Font(R.font.pretendardregular)),
+                    fontSize = 30.sp,
+                    color = Color(0xFF000000),
+                    modifier = Modifier.padding(start = 30.dp)
+                )
+                Text(
+                    text = "55세에 UX 디자이너 되기",
+                    fontFamily = FontFamily(Font(R.font.pretendardextrabold)),
+                    fontSize = 24.sp,
+                    color = Color(0xFF000000),
+                    modifier = Modifier.padding(start = 32.dp, top=10.dp)
+                )
+            }
+            Icon(
+                painter = painterResource(id = R.drawable.btn_chevrons_right),
+                contentDescription = "Btn_chevrons",
+                modifier = Modifier
+                    .padding(top=43.dp, start = 5.dp)
+                    .clickable {  },
+                tint = Color(0xFF93B65E)
+            )
         }
     }
 }

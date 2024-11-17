@@ -44,3 +44,10 @@ fun ButtonComponent(
         )
     }
 }
+/*
+        ButtonComponent(
+            buttonText = "String Button Text",
+            buttonColorType = ButtonColorEnum.LightGreen,//or Green
+            onClick = { Log.i("ComponentTag", "ButtonComponent") }
+        )
+*/

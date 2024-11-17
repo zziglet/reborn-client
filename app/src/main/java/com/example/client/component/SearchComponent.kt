@@ -100,3 +100,16 @@ fun SearchComponent(
         }
     }
 }
+/*
+            SearchComponent(
+                searchPlaceholderText = "입력하세요",
+                onClickCancel = {
+                    Log.i("ComponentTag", "SearchComponent Cancel Click")
+                }
+                onSearch = { 
+                    Log.i("ComponentTag", "SearchComponent Search Enter")
+                }
+            )
+            
+            검색 버튼이 없어, Enter 버튼 입력 시 OnSearch 함수가 실행됨
+ */

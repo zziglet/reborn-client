@@ -31,3 +31,11 @@ fun PageIndexComponent(
         )
     }
 }
+/*
+    var currentPage by remember { mutableIntStateOf(1) }
+    var totalPage = 3
+
+    PageIndexComponent(currentPage, totalPage)
+
+    외부에서 currentPage 값을 변경 시, 따라서 변경
+*/

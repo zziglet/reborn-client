@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.client.R
+import com.example.client.domain.TestUserInfo
 import com.example.client.domain.UserInfo
 
 //[todo] : 메인화면 뷰 퍼블리싱
@@ -41,7 +42,7 @@ fun MainScreen(){
     //[todo] : 로그인한 사용자 닉네임 가져오기
     LaunchedEffect(Unit) {
         UserInfo.fetchUserInfo { user ->
-            nickname = user?.nickname
+            nickname = user?.nickname ?: TestUserInfo.TEST_USERNAME
         }
     }
 
@@ -64,7 +65,7 @@ fun MainScreen(){
             modifier = Modifier.padding(top = 10.dp, start = 20.dp)
         ){
             val greetingText = buildAnnotatedString {
-                append("${nickname ?: "사용자"}")
+                append(nickname ?: "사용자")
                 addStyle(
                     SpanStyle(fontFamily = FontFamily(Font(R.font.pretendardextrabold))),
                     start = 0,

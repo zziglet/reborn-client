@@ -3,6 +3,11 @@ package com.example.client.domain
 import android.util.Log
 import com.kakao.sdk.user.UserApiClient
 
+object TestUserInfo {
+    const val TEST_USERNAME = "김영숙"
+    const val TEST_PASSWORD = "admin"
+}
+
 object UserInfo {
     // 사용자 정보를 요청하는 함수
     fun fetchUserInfo(callback: (User?) -> Unit) {

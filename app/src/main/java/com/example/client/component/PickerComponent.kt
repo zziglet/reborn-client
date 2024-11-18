@@ -34,7 +34,7 @@ fun PickerComponent() {
         MenuItem("강원", listOf("춘천시", "원주시", "강릉시"))
     )
 
-    var selectedLeftMenu by remember { mutableStateOf<MenuItem?>(null) }
+    var selectedMenu by remember { mutableStateOf<MenuItem?>(null) }
     var selectedSubMenu by remember { mutableStateOf<String?>(null) }
 
     Row(
@@ -47,13 +47,13 @@ fun PickerComponent() {
         ) {
             menuData.forEach { menuItem ->
                 val backgroundColor =
-                    if (selectedLeftMenu == menuItem) Color(0xFF48582F) else Color.Transparent
+                    if (selectedMenu == menuItem) Color(0xFF48582F) else Color.Transparent
 
                 Column(modifier = Modifier
                     .fillMaxWidth()
                     .background(backgroundColor)
                     .clickable {
-                        selectedLeftMenu = menuItem
+                        selectedMenu = menuItem
                         selectedSubMenu = null
                     }
                     .padding(start = 20.dp, top = 12.dp, end = 12.dp, bottom = 12.dp)
@@ -64,7 +64,7 @@ fun PickerComponent() {
                             fontSize = 16.sp,
                             lineHeight = 24.sp,
                             fontFamily = FontFamily(Font(R.font.pretendardextrabold)),
-                            color = if (selectedLeftMenu == menuItem) Color(0xFFFCF4DC) else Color(0xff61646b),
+                            color = if (selectedMenu == menuItem) Color(0xFFFCF4DC) else Color(0xff61646b),
                             textAlign = TextAlign.Center,
                         )
                     )
@@ -86,7 +86,7 @@ fun PickerComponent() {
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.Start
             ) {
-                selectedLeftMenu?.submenus?.forEach { submenu ->
+                selectedMenu?.submenus?.forEach { submenu ->
                     Box(
                         modifier = Modifier.padding(horizontal = 18.dp, vertical = 8.dp)
                     ) {

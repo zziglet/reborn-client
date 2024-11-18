@@ -38,7 +38,6 @@ fun OnboardingScreen(userName: String, onSubmit: (String, List<String>) -> Unit)
 
     var currentQuestionIndex by remember { mutableStateOf(0) }
     var selectedAnswer by remember { mutableStateOf("") }
-    var additionalAnswers = remember { mutableStateListOf<String>() }
 
     Column(
         modifier = Modifier
@@ -155,8 +154,7 @@ fun OnboardingScreen(userName: String, onSubmit: (String, List<String>) -> Unit)
                         if (currentQuestionIndex < questions.size - 1) {
                             currentQuestionIndex++
                         } else {
-                            // todo : 제출 버튼이 뜨지 않는 오류 수정해야 함
-                            onSubmit(userName, additionalAnswers)
+                            // todo : 컴포넌트 상태 값 받아서 마지막 질문일 경우 제출 버튼 기능 구현
                         }
                     }
                 )

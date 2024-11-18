@@ -50,17 +50,19 @@ fun JobFieldComponent() {
             val isSelected = selectedField == jobField
             val backgroundColor = if (isSelected) Color(0xFF48582F) else Color.Transparent
 
-            Box(
-                modifier = Modifier
-                    .padding(5.dp) // 아이템 간의 간격
-                    .border(width = 1.dp, color = Color(0xFF48582F), shape = RoundedCornerShape(size = 20.dp))
-                    .background(backgroundColor, shape = RoundedCornerShape(size = 20.dp)) // 배경색 설정
-                    .clickable {
-                        selectedField = if (isSelected) null else jobField
-                    }
-                    .padding(10.dp), // 내부 패딩
-                contentAlignment = Alignment.Center
-            ) {
+            Box(modifier = Modifier
+                .padding(5.dp)
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFF48582F),
+                    shape = RoundedCornerShape(size = 20.dp)
+                )
+                .background(backgroundColor, shape = RoundedCornerShape(size = 20.dp)) // 배경색 설정
+                .clickable {
+                    selectedField = if (isSelected) null else jobField
+                }
+                .padding(10.dp),
+                contentAlignment = Alignment.Center) {
                 Text(
                     text = jobField.name,
                     style = TextStyle(

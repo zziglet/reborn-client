@@ -37,25 +37,26 @@ fun PickerComponent() {
     var selectedLeftMenu by remember { mutableStateOf<MenuItem?>(null) }
     var selectedSubMenu by remember { mutableStateOf<String?>(null) }
 
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .height(174.dp)) {
-        Column(modifier = Modifier
-            .width(141.dp)
-            .fillMaxHeight()) {
+    Row(
+        modifier = Modifier.height(174.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .width(141.dp)
+                .fillMaxHeight()
+        ) {
             menuData.forEach { menuItem ->
-                // 각 아이템의 배경색을 설정
-                val backgroundColor = if (selectedLeftMenu == menuItem) Color(0xFF48582F) else Color.Transparent
+                val backgroundColor =
+                    if (selectedLeftMenu == menuItem) Color(0xFF48582F) else Color.Transparent
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(backgroundColor)
-                        .clickable {
-                            selectedLeftMenu = menuItem
-                            selectedSubMenu = null
-                        }
-                        .padding(start = 20.dp, top = 12.dp, end = 12.dp, bottom = 12.dp) // 패딩 추가
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .background(backgroundColor)
+                    .clickable {
+                        selectedLeftMenu = menuItem
+                        selectedSubMenu = null
+                    }
+                    .padding(start = 20.dp, top = 12.dp, end = 12.dp, bottom = 12.dp)
                 ) {
                     Text(
                         text = menuItem.name,
@@ -71,36 +72,35 @@ fun PickerComponent() {
             }
         }
 
-        // 오른쪽 메뉴 (하위 메뉴)
-        Box(modifier = Modifier
-            .width(196.dp)
-            .fillMaxHeight()
-            .background(Color(0xfffffffb))
-            .height(192.dp)) {
-            Column(modifier = Modifier
+        // todo : 상위, 하위 모두 선택해야 넘어갈 수 있도록 구현해야 함
+        Box(
+            modifier = Modifier
+                .width(196.dp)
                 .fillMaxHeight()
-                .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.Start) {
+                .background(Color(0xfffffffb))
+                .height(192.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.Start
+            ) {
                 selectedLeftMenu?.submenus?.forEach { submenu ->
-                    Box(modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                    Box(
+                        modifier = Modifier.padding(horizontal = 18.dp, vertical = 8.dp)
                     ) {
-                        Text(
-                            text = submenu,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    selectedSubMenu = submenu
-
-                                }
-                                .padding(8.dp),
+                        Text(text = submenu, modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                selectedSubMenu = submenu
+                            }
+                            .padding(8.dp),
                             style = TextStyle(
-                                fontSize = 14.sp,
+                                fontSize = 16.sp,
                                 lineHeight = 20.sp,
                                 fontFamily = FontFamily(Font(R.font.pretendardregular)),
-                                fontWeight = if (selectedSubMenu == submenu) FontWeight.ExtraBold else FontWeight.Normal,
-                                textAlign = TextAlign.Center,
-                            )
+                                fontWeight = if (selectedSubMenu == submenu) FontWeight.ExtraBold else FontWeight.Normal,)
                         )
                     }
                 }
@@ -108,4 +108,3 @@ fun PickerComponent() {
         }
     }
 }
-

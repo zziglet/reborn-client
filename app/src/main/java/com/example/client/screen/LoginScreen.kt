@@ -36,13 +36,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.client.R
 import com.example.client.domain.TestUserInfo
 import com.example.client.domain.loginWithKakao
 
 // [todo]: login view 출력
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController) {
     val context = LocalContext.current
 
     var username by remember { mutableStateOf("") }
@@ -149,7 +150,7 @@ fun LoginScreen() {
             Button(
                 onClick = {
                     if (username == TestUserInfo.TEST_USERNAME && password == TestUserInfo.TEST_PASSWORD) {
-                        //메인으로 이동
+                        navController.navigate("MainOnboarding")
                     } else {
                         Toast.makeText(context,"로그인 실패",Toast.LENGTH_SHORT).show()
                     }

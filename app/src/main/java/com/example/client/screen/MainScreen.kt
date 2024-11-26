@@ -30,13 +30,14 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.client.R
 import com.example.client.domain.TestUserInfo
 import com.example.client.domain.UserInfo
 
 //[todo] : 메인화면 뷰 퍼블리싱
 @Composable
-fun MainScreen(){
+fun MainScreen(navController: NavController){
     var nickname by remember { mutableStateOf<String?>(null) }
 
     //[todo] : 로그인한 사용자 닉네임 가져오기

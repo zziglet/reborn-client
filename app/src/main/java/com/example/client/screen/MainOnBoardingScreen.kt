@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.client.R
 import com.example.client.component.ButtonColorEnum
 import com.example.client.component.ButtonComponent
@@ -21,7 +22,7 @@ import com.example.client.component.PageIndexComponent
 import com.example.client.component.PickerComponent
 
 @Composable
-fun OnboardingScreen(userName: String, onSubmit: (String, List<String>) -> Unit) {
+fun MainOnboardingScreen(userName: String, navController: NavController) {
 
     /* 카카오 로그인 시 사용자 닉네임 가져오기
     LaunchedEffect(Unit) {
@@ -79,7 +80,7 @@ fun OnboardingScreen(userName: String, onSubmit: (String, List<String>) -> Unit)
                         fontFamily = FontFamily(Font(R.font.pretendardextrabold))
                     )
                 }
-                Spacer(modifier = Modifier.size(32.dp))
+                Spacer(modifier = Modifier.size(width = 185.dp, height = 20.dp))
                 PageIndexComponent(currentPage = currentQuestionIndex + 1, totalPage = questions.size)
             }
             Spacer(modifier = Modifier.size(70.dp))
@@ -155,6 +156,7 @@ fun OnboardingScreen(userName: String, onSubmit: (String, List<String>) -> Unit)
                             currentQuestionIndex++
                         } else {
                             // todo : 컴포넌트 상태 값 받아서 마지막 질문일 경우 제출 버튼 기능 구현
+                            navController.navigate("Main")
                         }
                     }
                 )

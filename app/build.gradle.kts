@@ -72,6 +72,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.tools.core)
     implementation(libs.volley)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.navigation.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -21,7 +21,7 @@ import com.example.client.component.PageIndexComponent
 import com.example.client.component.PickerComponent
 
 @Composable
-fun OnboardingScreen(userName: String, onSubmit: (String, List<String>) -> Unit) {
+fun MainOnboardingScreen(userName: String, onSubmit: (String, List<String>) -> Unit) {
 
     /* 카카오 로그인 시 사용자 닉네임 가져오기
     LaunchedEffect(Unit) {
@@ -38,6 +38,7 @@ fun OnboardingScreen(userName: String, onSubmit: (String, List<String>) -> Unit)
 
     var currentQuestionIndex by remember { mutableStateOf(0) }
     var selectedAnswer by remember { mutableStateOf("") }
+    var additionalAnswers = remember { mutableListOf<String>() }
 
     Column(
         modifier = Modifier
@@ -152,9 +153,14 @@ fun OnboardingScreen(userName: String, onSubmit: (String, List<String>) -> Unit)
                     buttonColorType = if (currentQuestionIndex < questions.size - 1) ButtonColorEnum.Green else ButtonColorEnum.LightGreen,
                     onClick = {
                         if (currentQuestionIndex < questions.size - 1) {
+                            if (currentQuestionIndex == 0) {
+                                additionalAnswers.add(selectedAnswer)
+                            }
                             currentQuestionIndex++
                         } else {
                             // todo : 컴포넌트 상태 값 받아서 마지막 질문일 경우 제출 버튼 기능 구현
+                            additionalAnswers.add(selectedAnswer) // 마지막 답변 저장
+                            onSubmit(userName, additionalAnswers)
                         }
                     }
                 )

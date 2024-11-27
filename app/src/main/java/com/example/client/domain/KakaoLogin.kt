@@ -18,7 +18,7 @@ data class KakaoLoginRequest(
 
 // API 호출 -> POST request
 interface ApiService {
-    @POST("re-born.asia/api/auth/kakao")
+    @POST("/api/auth/kakao")
     fun sendKakaoToken(@Body request: KakaoLoginRequest): Call<Void>
 }
 

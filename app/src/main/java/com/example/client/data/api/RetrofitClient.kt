@@ -1,10 +1,11 @@
 package com.example.client.data.api
 
+import com.example.client.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "https://your.api.url/"
+    private val BASE_URL = BuildConfig.BASE_URL
 
     val apiService: ApiService by lazy {
         Retrofit.Builder()

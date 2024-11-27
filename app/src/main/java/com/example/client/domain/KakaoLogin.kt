@@ -2,6 +2,8 @@ package com.example.client.domain
 
 import android.content.Context
 import android.util.Log
+import com.example.client.BuildConfig
+import com.example.client.BuildConfig.BASE_URL
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -21,7 +23,7 @@ interface ApiService {
 }
 
 object RetrofitClient {
-    private const val BASE_URL = com.example.client.BuildConfig.BASE_URL // 서버 URL
+    private val BASE_URL = BuildConfig.BASE_URL // 서버 URL
 
     val instance: ApiService by lazy {
         val retrofit = Retrofit.Builder()

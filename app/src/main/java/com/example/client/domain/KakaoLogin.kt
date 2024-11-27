@@ -23,7 +23,7 @@ interface ApiService {
 }
 
 object RetrofitClient {
-    private val BASE_URL = BuildConfig.BASE_URL // 서버 URL
+    private val BASE_URL = com.example.client.BuildConfig.BASE_URL // 서버 URL
 
     val instance: ApiService by lazy {
         val retrofit = Retrofit.Builder()

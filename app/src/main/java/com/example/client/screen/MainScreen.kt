@@ -34,12 +34,11 @@ import com.example.client.R
 import com.example.client.domain.TestUserInfo
 import com.example.client.domain.UserInfo
 
-//[todo] : 메인화면 뷰 퍼블리싱
+
 @Composable
 fun MainScreen(){
     var nickname by remember { mutableStateOf<String?>(null) }
 
-    //[todo] : 로그인한 사용자 닉네임 가져오기
     LaunchedEffect(Unit) {
         UserInfo.fetchUserInfo { user ->
             nickname = user?.nickname ?: TestUserInfo.TEST_USERNAME
@@ -83,6 +82,8 @@ fun MainScreen(){
                 color = Color(0xFF000000),
             )
             Spacer(modifier = Modifier.size(80.dp))
+
+            //todo : 사용자 프로필 이미지로 변경
             Image(
                 painter = painterResource(id = R.drawable.btn_editprofile),
                 contentDescription = "Btn_editprofile",
@@ -94,7 +95,6 @@ fun MainScreen(){
 
         }
 
-        //[todo] : main 기능 button 구현
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -120,11 +120,13 @@ fun MainScreen(){
                         .clickable {  }
                 )
                 Image(
-                    painter = painterResource(id = R.drawable.btn_hobby),
+                    painter = painterResource(id = R.drawable.btn_user),
                     contentDescription = "Btn_job",
                     modifier = Modifier
                         .padding(top=5.dp, start = 5.dp)
                         .clickable {  }
+                        .size(width = 160.dp, height = 140.dp)
+                        .fillMaxWidth()
                 )
             }
         }

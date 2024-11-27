@@ -4,8 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.DropdownMenu
@@ -23,8 +26,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.client.R
 
 @Composable
@@ -32,6 +40,16 @@ fun SelectFieldComponent() {
     var expanded by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf("재직") }
 
+    Text(text ="퇴직 여부",
+        style = TextStyle(
+            fontSize = 24.sp,
+            lineHeight = 33.6.sp,
+            fontFamily = FontFamily(Font(R.font.pretendardextrabold)),
+            color = Color(0xFF000000),
+            textAlign = TextAlign.Center,
+        )
+    )
+    Spacer(modifier = Modifier.size(10.dp))
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -41,8 +59,7 @@ fun SelectFieldComponent() {
             onValueChange = {},
             placeholder = { Text("선택된 옵션") },
             modifier = Modifier
-                .height(52.dp)
-                .width(264.dp),
+                .fillMaxWidth(),
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color.White,
                 focusedContainerColor = Color.White,

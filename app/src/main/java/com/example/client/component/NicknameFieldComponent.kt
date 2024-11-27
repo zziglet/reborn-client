@@ -14,13 +14,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.example.client.R
 
 @Composable
 fun NicknameFieldComponent(userName: String, onCancel: (String) -> Unit) {
     var nicknameText by remember { mutableStateOf("") }
 
+    Text(text ="닉네임",
+        style = TextStyle(
+            fontSize = 24.sp,
+            lineHeight = 33.6.sp,
+            fontFamily = FontFamily(Font(R.font.pretendardextrabold)),
+            color = Color(0xFF000000),
+            textAlign = TextAlign.Center,
+        )
+    )
+    Spacer(modifier = Modifier.size(10.dp))
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -30,8 +46,7 @@ fun NicknameFieldComponent(userName: String, onCancel: (String) -> Unit) {
             onValueChange = { nicknameText = it },
             placeholder = { Text(userName) },
             modifier = Modifier
-                .height(52.dp)
-                .width(264.dp)
+                .fillMaxWidth()
                 .background(Color.LightGray, shape = RoundedCornerShape(8.dp)),
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color.White,

@@ -133,13 +133,3 @@ fun JobListComponent(
         }
     }
 }
-/*
-            CertificateButtonComponent(
-                certificateDepartment = "한국고용정보원",
-                certificateName = "고용서비스",
-                date = "25.07.15",
-                onClick = {
-                    Log.i("ComponentTag", "CertificateButtonComponent")
-                }
-            )
-*/

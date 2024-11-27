@@ -36,7 +36,6 @@ fun SelectFieldComponent() {
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        // 텍스트 필드
         OutlinedTextField(
             value = selectedOption,
             onValueChange = {},
@@ -57,16 +56,15 @@ fun SelectFieldComponent() {
             trailingIcon = {
                 // 화살표 아이콘
                 Icon(
-                    painter = painterResource(id = R.drawable.baseline_keyboard_arrow_down_24), // chevron down 아이콘 리소스
+                    painter = painterResource(id = R.drawable.baseline_keyboard_arrow_down_24),
                     contentDescription = null,
                     modifier = Modifier
-                        .clickable { expanded = true } // 아이콘 클릭 시 드롭다운 열기
-                        .padding(8.dp) // 아이콘 패딩
+                        .clickable { expanded = true }
+                        .padding(8.dp)
                 )
             }
         )
 
-        // 드롭다운 메뉴
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
@@ -77,8 +75,8 @@ fun SelectFieldComponent() {
                 DropdownMenuItem(
                     text = { Text(option) },
                     onClick = {
-                        selectedOption = option // 클릭한 옵션으로 업데이트
-                        expanded = false // 드롭다운 닫기
+                        selectedOption = option
+                        expanded = false
                     },
                     modifier = Modifier.background(Color.White)
                 )

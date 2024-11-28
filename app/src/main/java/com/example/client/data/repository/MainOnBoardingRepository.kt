@@ -7,9 +7,13 @@ import retrofit2.Response
 class MainOnboardingRepository(private val apiService: ApiService) {
 
     // 온보딩 데이터를 제출하는 메서드
-    suspend fun submitOnboarding(username: String, answers: List<String>): Response<Void> {
+    suspend fun submitOnboarding(
+        employmentStatus: String,
+        region: String,
+        interestedField: List<String>
+    ): Response<Void> {
         // OnboardingRequest 객체 생성
-        val request = MainOnBoardingRequest(username, answers)
+        val request = MainOnBoardingRequest(employmentStatus, region, interestedField)
         // API 호출
         return apiService.submitOnboarding(request)
     }

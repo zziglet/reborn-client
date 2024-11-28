@@ -2,39 +2,10 @@ package com.example.client.domain
 
 import android.content.Context
 import android.util.Log
-import com.example.client.BuildConfig
-import com.example.client.BuildConfig.*
+import com.example.client.data.api.RetrofitClient
+import com.example.client.data.model.request.KakaoLoginRequest
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.POST
-
-// 데이터 모델
-data class KakaoLoginRequest(
-    val accessToken: String
-)
-
-// API 호출 -> POST request
-interface ApiService {
-    @POST("/api/auth/kakao")
-    fun sendKakaoToken(@Body request: KakaoLoginRequest): Call<Void>
-}
-
-object RetrofitClient {
-    private val BASE_URL = BuildConfig.BASE_URL // 서버 URL
-
-    val instance: ApiService by lazy {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        retrofit.create(ApiService::class.java)
-    }
-}
-
 
 // [todo]: 카카오톡으로 로그인 요청(에뮬레이터에 카카오톡 어플 설치 및 로그인 필요)
 fun loginWithKakao(context: Context) {

@@ -19,9 +19,10 @@ import com.example.client.component.ButtonComponent
 import com.example.client.component.JobFieldComponent
 import com.example.client.component.PageIndexComponent
 import com.example.client.component.PickerComponent
+import com.example.client.data.api.RetrofitClient
 
 @Composable
-fun MainOnboardingScreen(userName: String, onSubmit: (String, List<String>) -> Unit) {
+fun MainOnboardingScreen(userName: String) {
 
     /* 카카오 로그인 시 사용자 닉네임 가져오기
     LaunchedEffect(Unit) {
@@ -160,7 +161,6 @@ fun MainOnboardingScreen(userName: String, onSubmit: (String, List<String>) -> U
                         } else {
                             // todo : 컴포넌트 상태 값 받아서 마지막 질문일 경우 제출 버튼 기능 구현
                             additionalAnswers.add(selectedAnswer) // 마지막 답변 저장
-                            onSubmit(userName, additionalAnswers)
                         }
                     }
                 )

@@ -25,7 +25,7 @@ data class MenuItem(
 )
 
 @Composable
-fun PickerComponent() {
+fun PickerComponent(onSubMenuSelected: (String?) -> Unit) {
     // 메뉴 데이터 정의
     val menuData = listOf(
         MenuItem("서울", listOf("광진구", "용산구", "강동구", "강북구", "마포구", "중구")),
@@ -94,6 +94,7 @@ fun PickerComponent() {
                             .fillMaxWidth()
                             .clickable {
                                 selectedSubMenu = submenu
+                                onSubMenuSelected(submenu)
                             }
                             .padding(8.dp),
                             style = TextStyle(

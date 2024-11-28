@@ -13,23 +13,20 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.client.R
 import com.example.client.component.ButtonColorEnum
 import com.example.client.component.ButtonComponent
+import com.example.client.component.JobField
 import com.example.client.component.JobFieldComponent
 import com.example.client.component.PageIndexComponent
 import com.example.client.component.PickerComponent
-import com.example.client.data.api.RetrofitClient
+import com.example.client.domain.UserInfo
+import com.example.client.viewmodel.MainOnBoardingViewModel
 
 @Composable
-fun MainOnboardingScreen(userName: String) {
-
-    /* 카카오 로그인 시 사용자 닉네임 가져오기
-    LaunchedEffect(Unit) {
-        UserInfo.fetchUserInfo { user ->
-            nickname = user?.nickname ?: TestUserInfo.TEST_USERNAME
-        }
-    }*/
+fun MainOnBoardingScreen(onBoardingViewModel: MainOnBoardingViewModel = viewModel()) {
+    var nickname = UserInfo.TEST_USERNAME
 
     val questions = listOf(
         "현재 경제활동 상태",
@@ -39,7 +36,8 @@ fun MainOnboardingScreen(userName: String) {
 
     var currentQuestionIndex by remember { mutableStateOf(0) }
     var selectedAnswer by remember { mutableStateOf("") }
-    var additionalAnswers = remember { mutableListOf<String>() }
+    var additionalAnswers = remember { mutableStateListOf<String>() }
+    var selectedJobFields by remember { mutableStateOf<List<JobField>>(emptyList()) }
 
     Column(
         modifier = Modifier
@@ -63,7 +61,7 @@ fun MainOnboardingScreen(userName: String) {
                 .fillMaxHeight()
                 .background(color = Color(0xFFFFFEF4), shape = RoundedCornerShape(size = 40.dp))
         ) {
-            Row(){
+            Row() {
                 Column(modifier = Modifier.padding(top = 20.dp, start = 20.dp)) {
                     Text(
                         text = "반가워요,\n",
@@ -74,7 +72,7 @@ fun MainOnboardingScreen(userName: String) {
                     )
                     Spacer(modifier = Modifier.size(8.dp))
                     Text(
-                        text = "$userName 님!",
+                        text = "$nickname 님!",
                         fontSize = 30.sp,
                         color = Color(0xFF000000),
                         modifier = Modifier.height(35.dp),
@@ -94,6 +92,7 @@ fun MainOnboardingScreen(userName: String) {
                 fontFamily = FontFamily(Font(R.font.pretendardregular))
             )
             Spacer(modifier = Modifier.size(70.dp))
+
             when (currentQuestionIndex) {
                 0 -> {
                     val jobFields = listOf("재직", "퇴직")
@@ -113,9 +112,7 @@ fun MainOnboardingScreen(userName: String) {
                                     .height(40.dp)
                                     .align(alignment = Alignment.CenterHorizontally),
                                 fontFamily = FontFamily(Font(R.font.pretendardextrabold)),
-                                color = if (selectedAnswer == field) Color(0xFF48582F) else Color(
-                                    0xff979797
-                                )
+                                color = if (selectedAnswer == field) Color(0xFF48582F) else Color(0xff979797)
                             )
                             Spacer(modifier = Modifier.size(20.dp))
                         }
@@ -127,8 +124,12 @@ fun MainOnboardingScreen(userName: String) {
                         modifier = Modifier.fillMaxWidth()
                             .align(alignment = Alignment.CenterHorizontally),
                         contentAlignment = Alignment.Center,
-                    ){
-                        PickerComponent()
+                    ) {
+                        PickerComponent { submenu ->
+                            if (submenu != null) {
+                                selectedAnswer = submenu // 선택된 서브 메뉴 저장
+                            }
+                        }
                     }
                 }
 
@@ -138,7 +139,9 @@ fun MainOnboardingScreen(userName: String) {
                             .fillMaxWidth()
                             .align(alignment = Alignment.CenterHorizontally),
                     ) {
-                        JobFieldComponent()
+                        JobFieldComponent { jobFields ->
+                            selectedJobFields = jobFields // 선택된 직업 필드를 저장
+                        }
                     }
                 }
             }
@@ -154,13 +157,17 @@ fun MainOnboardingScreen(userName: String) {
                     buttonColorType = if (currentQuestionIndex < questions.size - 1) ButtonColorEnum.Green else ButtonColorEnum.LightGreen,
                     onClick = {
                         if (currentQuestionIndex < questions.size - 1) {
-                            if (currentQuestionIndex == 0) {
-                                additionalAnswers.add(selectedAnswer)
-                            }
-                            currentQuestionIndex++
+                            additionalAnswers.add(selectedAnswer) // 현재 선택된 답변 추가
+                            selectedAnswer = "" // 선택 초기화
+                            currentQuestionIndex++ // 다음 질문으로 이동
                         } else {
-                            // todo : 컴포넌트 상태 값 받아서 마지막 질문일 경우 제출 버튼 기능 구현
-                            additionalAnswers.add(selectedAnswer) // 마지막 답변 저장
+                            additionalAnswers.add(selectedAnswer) // 마지막 질문의 답변 추가
+                            // API 요청 구현
+                            onBoardingViewModel.submitOnBoarding(
+                                additionalAnswers[0],
+                                additionalAnswers[1],
+                                selectedJobFields.map { it.name } // 직업 필드를 배열로 전달
+                            )
                         }
                     }
                 )
@@ -168,3 +175,4 @@ fun MainOnboardingScreen(userName: String) {
         }
     }
 }
+

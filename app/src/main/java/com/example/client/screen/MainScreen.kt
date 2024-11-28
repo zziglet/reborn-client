@@ -16,11 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -31,20 +26,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.client.R
-import com.example.client.domain.TestUserInfo
 import com.example.client.domain.UserInfo
 
 //[todo] : 메인화면 뷰 퍼블리싱
 @Composable
 fun MainScreen(){
-    var nickname by remember { mutableStateOf<String?>(null) }
-
-    //[todo] : 로그인한 사용자 닉네임 가져오기
-    LaunchedEffect(Unit) {
-        UserInfo.fetchUserInfo { user ->
-            nickname = user?.nickname ?: TestUserInfo.TEST_USERNAME
-        }
-    }
+    var nickname = UserInfo.TEST_USERNAME
 
     Column (
         modifier = Modifier.fillMaxSize()

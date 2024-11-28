@@ -37,8 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.client.R
-import com.example.client.domain.TestUserInfo
-import com.example.client.domain.loginWithKakao
+import com.example.client.domain.UserInfo
 
 // [todo]: login view 출력
 @Composable
@@ -148,7 +147,7 @@ fun LoginScreen() {
 
             Button(
                 onClick = {
-                    if (username == TestUserInfo.TEST_USERNAME && password == TestUserInfo.TEST_PASSWORD) {
+                    if (username == UserInfo.TEST_USERNAME && password == UserInfo.TEST_PASSWORD) {
                         //메인으로 이동
                     } else {
                         Toast.makeText(context,"로그인 실패",Toast.LENGTH_SHORT).show()
@@ -177,7 +176,8 @@ fun LoginScreen() {
                 .aspectRatio(5f)
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 30.dp)
-                .clickable { loginWithKakao(context) }
+                .clickable {  }
+            //loginWithKakao(context)
         )
     }
 }

@@ -2,6 +2,8 @@ package com.example.client.domain
 
 import android.content.Context
 import android.util.Log
+import com.example.client.BuildConfig
+import com.example.client.BuildConfig.BASE_URL
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Retrofit

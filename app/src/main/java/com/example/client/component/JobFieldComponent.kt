@@ -42,7 +42,7 @@ fun JobFieldComponent() {
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.height(220.dp),
         contentPadding = PaddingValues(40.dp)
     ) {
         items(jobFields.size) { index ->

@@ -38,8 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.client.R
-import com.example.client.domain.TestUserInfo
-import com.example.client.domain.loginWithKakao
+import com.example.client.domain.UserInfo
 
 // [todo]: login view 출력
 @Composable
@@ -178,7 +177,8 @@ fun LoginScreen(navController: NavController) {
                 .aspectRatio(5f)
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 30.dp)
-                .clickable { loginWithKakao(context) }
+                .clickable {  }
+            //loginWithKakao(context)
         )
     }
 }

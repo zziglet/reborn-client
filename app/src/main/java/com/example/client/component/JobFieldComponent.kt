@@ -24,7 +24,7 @@ data class JobField(
 )
 
 @Composable
-fun JobFieldComponent() {
+fun JobFieldComponent(onFieldsSelected: (List<JobField>) -> Unit) {
 
     val jobFields = listOf(
         JobField("IT"),
@@ -38,7 +38,7 @@ fun JobFieldComponent() {
         JobField("예술")
     )
 
-    var selectedField by remember { mutableStateOf<JobField?>(null) }
+    val selectedFields = remember { mutableStateListOf<JobField>() }
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -47,7 +47,7 @@ fun JobFieldComponent() {
     ) {
         items(jobFields.size) { index ->
             val jobField = jobFields[index]
-            val isSelected = selectedField == jobField
+            val isSelected = selectedFields.contains(jobField)
             val backgroundColor = if (isSelected) Color(0xFF48582F) else Color.Transparent
 
             Box(modifier = Modifier
@@ -57,9 +57,14 @@ fun JobFieldComponent() {
                     color = Color(0xFF48582F),
                     shape = RoundedCornerShape(size = 20.dp)
                 )
-                .background(backgroundColor, shape = RoundedCornerShape(size = 20.dp)) // 배경색 설정
+                .background(backgroundColor, shape = RoundedCornerShape(size = 20.dp))
                 .clickable {
-                    selectedField = if (isSelected) null else jobField
+                    if (isSelected) {
+                        selectedFields.remove(jobField) // 이미 선택된 경우 선택 해제
+                    } else {
+                        selectedFields.add(jobField) // 선택되지 않은 경우 추가
+                    }
+                    onFieldsSelected(selectedFields) // 선택된 필드 리스트를 전달
                 }
                 .padding(10.dp),
                 contentAlignment = Alignment.Center) {

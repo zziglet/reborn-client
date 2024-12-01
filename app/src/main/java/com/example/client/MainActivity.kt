@@ -22,8 +22,7 @@ class MainActivity : ComponentActivity() {
             MainOnBoardingViewModel::class.java)
 
         setContent {
-            MainOnBoardingScreen(onBoardingViewModel)
+            StartScren()
         }
     }
 }
-

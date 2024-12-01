@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.client.R
 import com.example.client.component.ButtonColorEnum
 import com.example.client.component.ButtonComponent
@@ -25,7 +26,8 @@ import com.example.client.domain.UserInfo
 import com.example.client.viewmodel.MainOnBoardingViewModel
 
 @Composable
-fun MainOnBoardingScreen(onBoardingViewModel: MainOnBoardingViewModel = viewModel()) {
+fun MainOnboardingScreen(onBoardingViewModel: MainOnBoardingViewModel = viewModel(), navController: NavController) {
+
     var nickname = UserInfo.TEST_USERNAME
 
     val questions = listOf(
@@ -79,7 +81,7 @@ fun MainOnBoardingScreen(onBoardingViewModel: MainOnBoardingViewModel = viewMode
                         fontFamily = FontFamily(Font(R.font.pretendardextrabold))
                     )
                 }
-                Spacer(modifier = Modifier.size(32.dp))
+                Spacer(modifier = Modifier.size(width = 185.dp, height = 20.dp))
                 PageIndexComponent(currentPage = currentQuestionIndex + 1, totalPage = questions.size)
             }
             Spacer(modifier = Modifier.size(70.dp))
@@ -168,6 +170,8 @@ fun MainOnBoardingScreen(onBoardingViewModel: MainOnBoardingViewModel = viewMode
                                 additionalAnswers[1],
                                 selectedJobFields.map { it.name } // 직업 필드를 배열로 전달
                             )
+                            // todo : 컴포넌트 상태 값 받아서 마지막 질문일 경우 제출 버튼 기능 구현
+                            navController.navigate("Main")
                         }
                     }
                 )

@@ -3,7 +3,7 @@ package com.example.client
 import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
 
-private var APP_KEY = BuildConfig.KAKAO_API_KEY;
+private val APP_KEY = com.example.client.BuildConfig.KAKAO_API_KEY
 class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()

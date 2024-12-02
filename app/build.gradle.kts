@@ -11,12 +11,12 @@ val properties = Properties().apply {
 
 android {
     namespace = "com.example.client"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.client"
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 

@@ -1,4 +1,4 @@
-package com.example.client.component
+package com.example.client.component.mypage
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -25,7 +25,7 @@ data class Qualification(
 )
 
 @Composable
-fun QualificationItemComponent(qualification: Qualification) {
+fun CertificateItemComponent(qualification: Qualification) {
 
     ListItem(
         modifier = Modifier.fillMaxWidth()
@@ -69,11 +69,11 @@ fun QualificationItemComponent(qualification: Qualification) {
 
 @Preview(showBackground = true)
 @Composable
-fun QualificationItemComponent() {
+fun CertificateItemComponent() {
     val sample = Qualification(
         title = "문화해설사",
         date = "2022.03.24"
     )
 
-    QualificationItemComponent(qualification = sample)
+    CertificateItemComponent(qualification = sample)
 }

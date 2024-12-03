@@ -1,4 +1,4 @@
-package com.example.client.component
+package com.example.client.component.onboarding
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding

@@ -1,4 +1,4 @@
-package com.example.client.component
+package com.example.client.component.job
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,14 +22,12 @@ fun KeywordButtonComponent(
         // TODO : 버튼 클릭
         onClick = {},
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF688142)),
-        shape = RoundedCornerShape(40.dp),
-        modifier = Modifier
-
+        shape = RoundedCornerShape(20.dp),
     ) {
         Text(
             text = buttonText,
             modifier = Modifier
-                .padding(horizontal = 12.dp, vertical = 6.dp),
+                .padding(horizontal = 8.dp, vertical = 1.dp),
             color = Color(0xFFFFFBDC),
             maxLines = 1,
             minLines = 1,

@@ -1,4 +1,4 @@
-package com.example.client.component
+package com.example.client.component.all
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

@@ -1,65 +1,75 @@
-package com.example.client.component
+package com.example.client.component.all
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.client.R
 
-data class OptionList(
-    val options: List<String> // 리스트를 받아옵니다
+data class JobField(
+    val name: String
 )
 
 @Composable
-fun CommunityOptionListComponent(optionList: OptionList) {
-    var selectedField by remember { mutableStateOf<String?>(null) }
+fun JobFieldComponent(onFieldsSelected: (List<JobField>) -> Unit) {
+
+    val jobFields = listOf(
+        JobField("IT"),
+        JobField("교육"),
+        JobField("사무직"),
+        JobField("판매직"),
+        JobField("의료"),
+        JobField("서비스"),
+        JobField("건설"),
+        JobField("제조업"),
+        JobField("예술")
+    )
+
+    val selectedFields = remember { mutableStateListOf<JobField>() }
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(4),
-        modifier = Modifier.fillMaxSize(),
+        columns = GridCells.Fixed(3),
+        modifier = Modifier.height(220.dp),
+        contentPadding = PaddingValues(40.dp)
     ) {
-        items(optionList.options) { option ->
-            val isSelected = selectedField == option
+        items(jobFields.size) { index ->
+            val jobField = jobFields[index]
+            val isSelected = selectedFields.contains(jobField)
             val backgroundColor = if (isSelected) Color(0xFF48582F) else Color.Transparent
 
             Box(modifier = Modifier
-                .padding(4.dp)
+                .padding(5.dp)
                 .border(
-                    width = 0.71.dp,
+                    width = 1.dp,
                     color = Color(0xFF48582F),
                     shape = RoundedCornerShape(size = 20.dp)
                 )
                 .background(backgroundColor, shape = RoundedCornerShape(size = 20.dp))
                 .clickable {
-                    selectedField = if (isSelected) null else option
+                    if (isSelected) {
+                        selectedFields.remove(jobField) // 이미 선택된 경우 선택 해제
+                    } else {
+                        selectedFields.add(jobField) // 선택되지 않은 경우 추가
+                    }
+                    onFieldsSelected(selectedFields) // 선택된 필드 리스트를 전달
                 }
-                .padding(4.dp)
-                .width(51.dp),
+                .padding(10.dp),
                 contentAlignment = Alignment.Center) {
                 Text(
-                    text = option,
+                    text = jobField.name,
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontFamily = FontFamily(Font(R.font.pretendardregular)),
@@ -69,11 +79,4 @@ fun CommunityOptionListComponent(optionList: OptionList) {
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewCommunityOptionListComponent() {
-    val sampleOptions = OptionList(options = listOf("전체보기", "교육", "상담", "농업", "미디어"))
-    CommunityOptionListComponent(optionList = sampleOptions)
 }

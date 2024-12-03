@@ -16,12 +16,12 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.client.R
-import com.example.client.component.ButtonColorEnum
-import com.example.client.component.ButtonComponent
-import com.example.client.component.JobField
-import com.example.client.component.JobFieldComponent
-import com.example.client.component.PageIndexComponent
-import com.example.client.component.PickerComponent
+import com.example.client.component.all.ButtonColorEnum
+import com.example.client.component.all.ButtonComponent
+import com.example.client.component.all.JobField
+import com.example.client.component.all.JobFieldComponent
+import com.example.client.component.onboarding.PageIndexComponent
+import com.example.client.component.onboarding.PickerComponent
 import com.example.client.domain.TestUserInfo
 import com.example.client.viewmodel.MainOnBoardingViewModel
 

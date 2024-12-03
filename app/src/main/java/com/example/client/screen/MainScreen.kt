@@ -115,7 +115,7 @@ fun MainScreen(navController: NavController){
                     contentDescription = "Btn_job",
                     modifier = Modifier
                         .padding(top=20.dp, start = 5.dp)
-                        .clickable {  }
+                        .clickable { navController.navigate("JobMain") }
                 )
                 Image(
                     painter = painterResource(id = R.drawable.btn_user),

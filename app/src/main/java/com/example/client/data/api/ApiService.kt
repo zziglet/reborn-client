@@ -8,9 +8,9 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiService {
-    @POST("/api/onboarding/save")
+    @POST("users/onboarding")
     suspend fun submitOnboarding(@Body request: MainOnBoardingRequest): Response<Void>
 
-    @POST("/api/auth/kakao")
+    @POST("auth/kakao")
     fun sendKakaoToken(@Body request: KakaoLoginRequest): Call<Void>
 }

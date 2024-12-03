@@ -22,13 +22,13 @@ import com.example.client.component.JobField
 import com.example.client.component.JobFieldComponent
 import com.example.client.component.PageIndexComponent
 import com.example.client.component.PickerComponent
-import com.example.client.domain.UserInfo
+import com.example.client.domain.TestUserInfo
 import com.example.client.viewmodel.MainOnBoardingViewModel
 
 @Composable
 fun MainOnboardingScreen(onBoardingViewModel: MainOnBoardingViewModel = viewModel(), navController: NavController) {
 
-    var nickname = UserInfo.TEST_USERNAME
+    var nickname = TestUserInfo.TEST_USERNAME
 
     val questions = listOf(
         "현재 경제활동 상태",

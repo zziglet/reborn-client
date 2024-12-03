@@ -9,9 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
 import com.example.client.navigation.NavigationHost
+import com.example.client.viewmodel.MainOnBoardingViewModel
 
 @Composable
-fun StartScren(){
+fun StartScreen(onBoardingViewModel: MainOnBoardingViewModel){
     val navController = rememberNavController()
     Scaffold {
         contentPadding ->
@@ -20,8 +21,7 @@ fun StartScren(){
                 .padding(contentPadding)
                 .background(color = Color.White)
         ) {
-            //NavigationHost 오타 수정
-            NavigationHost(navController = navController)
+            NavigationHost(navController = navController, onBoardingViewModel)
         }
     }
 }

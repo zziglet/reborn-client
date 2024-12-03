@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.client.R
-import com.example.client.domain.UserInfo
+import com.example.client.domain.TestUserInfo
 
 // [todo]: login view 출력
 @Composable

@@ -1,6 +1,6 @@
 package com.example.client.domain
 
-object UserInfo {
+object TestUserInfo {
     const val TEST_USERNAME = "김영숙"
     const val TEST_PASSWORD = "admin"
 }

@@ -7,10 +7,12 @@ import androidx.navigation.compose.composable
 import com.example.client.screen.LoginScreen
 import com.example.client.screen.MainScreen
 import com.example.client.screen.MainOnboardingScreen
+import com.example.client.viewmodel.MainOnBoardingViewModel
 
 @Composable
 fun NavigationHost(
     navController: NavHostController,
+    mainOnBoardingViewModel: MainOnBoardingViewModel
 ) {
     NavHost(
         navController = navController,
@@ -25,7 +27,10 @@ fun NavigationHost(
         }
 
         composable(NavRoutes.MainOnborading.route) {
-            MainOnboardingScreen("김영숙", navController)
+            MainOnboardingScreen(
+                onBoardingViewModel = mainOnBoardingViewModel,
+                navController = navController
+            )
         }
 
     }

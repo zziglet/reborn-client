@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
 import com.example.client.data.api.RetrofitClient
 import com.example.client.data.repository.MainOnBoardingRepository
-import com.example.client.screen.MainOnBoardingScreen
 import com.example.client.viewmodel.MainOnBoardingViewModel
 import com.example.client.viewmodel.MainOnBoardingViewModelFactory
 
@@ -22,7 +21,7 @@ class MainActivity : ComponentActivity() {
             MainOnBoardingViewModel::class.java)
 
         setContent {
-            StartScren()
+            StartScreen(onBoardingViewModel)
         }
     }
 }

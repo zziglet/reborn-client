@@ -23,8 +23,7 @@ class MainActivity : ComponentActivity() {
             MainOnBoardingViewModel::class.java)
 
         setContent {
-            JobMainScreen(navController = rememberNavController())
-            //StartScreen(onBoardingViewModel)
+            StartScreen(onBoardingViewModel)
         }
     }
 }

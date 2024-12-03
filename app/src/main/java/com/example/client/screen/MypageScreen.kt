@@ -38,16 +38,13 @@ import com.example.client.component.ButtonColorEnum
 import com.example.client.component.ButtonComponent
 import com.example.client.component.JobFieldComponent
 import com.example.client.domain.TestUserInfo
-import com.example.client.domain.UserInfo
 
 @Composable
 fun MyPageScreen() {
     var nickname by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
-        UserInfo.fetchUserInfo { user ->
-            nickname = user?.nickname ?: TestUserInfo.TEST_USERNAME
-        }
+        nickname = TestUserInfo.TEST_USERNAME
     }
 
     LazyColumn(
@@ -178,7 +175,7 @@ fun MyPageScreen() {
                     )
                 )
 
-                JobFieldComponent()
+                JobFieldComponent {  }
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
                 // todo: 나의 동네 수정 아이콘

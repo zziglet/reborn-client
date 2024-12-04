@@ -38,17 +38,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.client.R
 import com.example.client.component.job.CertificateButtonComponent
 import com.example.client.component.job.JobListComponent
 import com.example.client.component.job.KeywordButtonComponent
 import com.example.client.component.all.TabLayoutComponent
+import com.example.client.data.model.viewmodel.JobPostViewModel
 import com.example.client.domain.TestUserInfo
 
 @Composable
-fun JobMainScreen(navController: NavController){
+fun JobMainScreen(jobPostViewModel: JobPostViewModel = viewModel(), navController: NavController){
     var nickname by remember { mutableStateOf<String?>(null) }
+
 
     LaunchedEffect(Unit) {
         nickname = TestUserInfo.TEST_USERNAME

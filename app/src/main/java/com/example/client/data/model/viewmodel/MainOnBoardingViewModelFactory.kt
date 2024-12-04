@@ -1,4 +1,4 @@
-package com.example.client.viewmodel
+package com.example.client.data.model.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

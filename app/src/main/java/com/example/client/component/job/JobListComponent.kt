@@ -17,6 +17,9 @@ import androidx.compose.ui.unit.sp
 import com.example.client.R
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun JobListComponent(
@@ -50,15 +53,21 @@ fun JobListComponent(
                 // 회사명
                 Text(
                     text = companyName,
-                    color = Color(0xFF898A8D),
-                    fontSize = 16.sp
+                    color = Color(0xFF757575),
+                    fontSize = 14.sp,
+                    minLines = 1,
+                    maxLines = 1
                 )
+                Spacer(modifier = Modifier.height(3.dp))
                 // 업무명
                 Text(
                     text = jobTitle,
                     color = Color(0xFF366943),
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.ExtraBold
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily(Font(R.font.pretendardextrabold)),
+                    fontWeight = FontWeight.ExtraBold,
+                    minLines = 1,
+                    maxLines = 2
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 // 위치
@@ -73,7 +82,9 @@ fun JobListComponent(
                     Text(
                         text = location,
                         color = Color.Black,
-                        fontSize = 16.sp
+                        fontSize = 16.sp,
+                        minLines = 1,
+                        maxLines = 1
                     )
                 }
             }
@@ -100,12 +111,12 @@ fun JobListComponent(
                     contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
                     modifier = Modifier
                         .height(40.dp)
-                        .width(112.dp)
+                        .width(100.dp)
                         .padding(4.dp)
                 ) {
                     Text(
                         text = "자세히 보기",
-                        fontSize = 16.sp,
+                        fontSize = 12.sp,
                         color = Color.White,
                         fontWeight = FontWeight.Bold
                     )
@@ -113,4 +124,17 @@ fun JobListComponent(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun JobListComponentPreview(){
+    JobListComponent(
+        companyName = "사단법인 인구보건복지협회",
+        jobTitle = "2025년 제1차 인구보건복지협회  신규직원 인천지회(방사선사) 모집 공고",
+        location = "07230 서울특별시 영등포구 버드나루로14가길 20 (당산동))",
+        onClick = {
+            // 클릭 이벤트 처리
+        }
+    )
 }

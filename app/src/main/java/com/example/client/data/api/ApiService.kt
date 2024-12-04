@@ -2,6 +2,7 @@ package com.example.client.data.api
 
 import com.example.client.data.model.request.KakaoLoginRequest
 import com.example.client.data.model.request.MainOnBoardingRequest
+import com.example.client.data.model.response.JobPostResponse
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -23,7 +24,7 @@ interface ApiService {
 
     /** 일자리 */
     @GET("jobs/posts")
-    suspend fun getJob(): Response<Void>
+    suspend fun getJob(): Response<List<JobPostResponse>>
 
     @GET("jobs/posts/search")
     suspend fun searchJob(): Response<Void>

@@ -2,6 +2,7 @@ package com.example.client.data.api
 
 import com.example.client.data.model.request.KakaoLoginRequest
 import com.example.client.data.model.request.MainOnBoardingRequest
+import com.example.client.data.model.response.LicensesGetResponse
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -33,7 +34,7 @@ interface ApiService {
 
     /** 자격증 리스트 소환 */
     @GET("licenses")
-    suspend fun getLicenses(): Response<Void>
+    suspend fun getLicenses(): Response<List<LicensesGetResponse>>
 
     /** 마이페이지 */
     @GET("users/mypage")

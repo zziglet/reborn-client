@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -35,6 +36,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.example.client.R
 import com.example.client.component.all.ButtonColorEnum
 import com.example.client.component.all.ButtonComponent
@@ -135,14 +139,32 @@ fun MyPageScreen(
                     )
                 }
 
-                Image(
-                    painter = painterResource(id = R.drawable.icon_rebornlogo),
-                    contentDescription = "Icon_rebornlogo",
-                    modifier = Modifier
-                        .width(108.dp)
-                        .height(83.dp)
-                        .padding(bottom = 5.dp)
-                )
+                if (!user?.profileImg.isNullOrEmpty()) {
+                    // 프로필 이미지가 있는 경우
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(user?.profileImg)
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = "Profile Image",
+                        modifier = Modifier
+                            .width(108.dp)
+                            .height(83.dp)
+                            .padding(bottom = 5.dp),
+                        error = painterResource(id = R.drawable.icon_rebornlogo),  // 이미지 로드 실패시 기본 이미지
+                        placeholder = painterResource(id = R.drawable.icon_rebornlogo)  // 로딩 중 표시할 이미지
+                    )
+                } else {
+                    // 프로필 이미지가 없는 경우 기본 이미지 표시
+                    Image(
+                        painter = painterResource(id = R.drawable.icon_rebornlogo),
+                        contentDescription = "Icon_rebornlogo",
+                        modifier = Modifier
+                            .width(108.dp)
+                            .height(83.dp)
+                            .padding(bottom = 5.dp)
+                    )
+                }
 
                 nickname?.let {
                     Text(

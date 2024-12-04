@@ -1,12 +1,9 @@
-package com.example.client.component
+package com.example.client.component.job
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,7 +23,6 @@ fun JobListComponent(
         companyName: String,
         jobTitle: String,
         location: String,
-        salary: String,
         onClick: () -> Unit
     ) {
     Box(
@@ -76,21 +72,6 @@ fun JobListComponent(
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = location,
-                        color = Color.Black,
-                        fontSize = 16.sp
-                    )
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.icon_money), // 월급 아이콘
-                        contentDescription = null,
-                        modifier = Modifier.size(16.dp),
-                        tint = Color.Black
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = salary,
                         color = Color.Black,
                         fontSize = 16.sp
                     )

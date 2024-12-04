@@ -33,14 +33,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.client.R
-import com.example.client.component.ButtonColorEnum
-import com.example.client.component.ButtonComponent
-import com.example.client.component.JobFieldComponent
+import com.example.client.component.all.ButtonColorEnum
+import com.example.client.component.all.ButtonComponent
+import com.example.client.component.all.JobFieldComponent
 import com.example.client.domain.TestUserInfo
 
 @Composable
-fun MyPageScreen() {
+fun MyPageScreen(navController: NavController) {
     var nickname by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {

@@ -5,8 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.compose.rememberNavController
 import com.example.client.data.api.RetrofitClient
 import com.example.client.data.repository.MainOnBoardingRepository
+import com.example.client.screen.JobMainScreen
 import com.example.client.viewmodel.MainOnBoardingViewModel
 import com.example.client.viewmodel.MainOnBoardingViewModelFactory
 

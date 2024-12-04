@@ -1,4 +1,4 @@
-package com.example.client.component
+package com.example.client.component.job
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

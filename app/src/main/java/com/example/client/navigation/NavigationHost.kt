@@ -4,9 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.example.client.screen.JobMainScreen
 import com.example.client.screen.LoginScreen
 import com.example.client.screen.MainScreen
 import com.example.client.screen.MainOnboardingScreen
+import com.example.client.screen.MyPageScreen
 import com.example.client.viewmodel.MainOnBoardingViewModel
 
 @Composable
@@ -26,11 +28,19 @@ fun NavigationHost(
             MainScreen(navController)
         }
 
-        composable(NavRoutes.MainOnborading.route) {
+        composable(NavRoutes.MainOnboarding.route) {
             MainOnboardingScreen(
                 onBoardingViewModel = mainOnBoardingViewModel,
                 navController = navController
             )
+        }
+
+        composable(NavRoutes.JobMain.route) {
+            JobMainScreen(navController)
+        }
+
+        composable(NavRoutes.MyPage.route) {
+            MyPageScreen(navController)
         }
 
     }

@@ -1,4 +1,4 @@
-package com.example.client.component
+package com.example.client.component.community
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*

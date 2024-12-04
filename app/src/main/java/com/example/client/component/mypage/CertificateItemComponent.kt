@@ -1,10 +1,12 @@
 package com.example.client.component.mypage
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,7 +31,8 @@ fun CertificateItemComponent(qualification: Qualification) {
 
     ListItem(
         modifier = Modifier.fillMaxWidth()
-            .background(Color(0xFFFFFEF4)), // 전체 너비를 채우도록
+            .background(Color(0xFFFFFEF4))
+            .border(width = 1.dp, color = Color(0xFFE6E6E6)), // 전체 너비를 채우도록
         headlineContent = {
             Box(
                 modifier = Modifier.fillMaxWidth(), // Box를 전체 너비로 설정
@@ -47,6 +50,17 @@ fun CertificateItemComponent(qualification: Qualification) {
                 )
             }
         },
+        colors = ListItemColors(
+            containerColor = Color(0xFFFFFEF4),
+            headlineColor = Color(0xFFFFFEF4),
+            leadingIconColor = Color(0xFFFFFEF4),
+            disabledHeadlineColor = Color(0xFFFFFEF4),
+            disabledLeadingIconColor = Color(0xFFFFFEF4),
+            disabledTrailingIconColor = Color(0xFFFFFEF4),
+            supportingTextColor = Color(0xFFFFFEF4),
+            overlineColor = Color(0xFFFFFEF4),
+            trailingIconColor = Color(0xFFFFFEF4)
+        ),
         supportingContent = {
             Box(
                 modifier = Modifier.fillMaxWidth(), // Box를 전체 너비로 설정

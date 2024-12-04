@@ -37,7 +37,11 @@ import androidx.navigation.NavController
 import com.example.client.R
 import com.example.client.component.all.ButtonColorEnum
 import com.example.client.component.all.ButtonComponent
+import com.example.client.component.all.CertificateComponent
 import com.example.client.component.all.JobFieldComponent
+import com.example.client.component.mypage.CertificateItemComponent
+import com.example.client.component.mypage.Qualification
+import com.example.client.component.mypage.RebornTemperatureComponent
 import com.example.client.domain.TestUserInfo
 
 @Composable
@@ -142,20 +146,7 @@ fun MyPageScreen(navController: NavController) {
                         modifier = Modifier.padding(bottom = 10.dp)
                     )
                 }
-
-                Text(
-                    text = "리본 온도",
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        lineHeight = 33.6.sp,
-                        fontFamily = FontFamily(Font(R.font.pretendardregular)),
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFF000000),
-                        textAlign = TextAlign.Center,
-                    ),
-                    modifier = Modifier.padding(top = 5.dp, bottom = 20.dp)
-                )
-                //todo: 리본 컴포넌트 추가
+                RebornTemperatureComponent(modifier = Modifier.padding(bottom = 20.dp))
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
                 //todo: 관심 분야 수정 아이콘
@@ -219,6 +210,13 @@ fun MyPageScreen(navController: NavController) {
                     ),
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
+                Spacer(modifier = Modifier.size(15.dp))
+                val sample = Qualification(
+                    title = "문화해설사",
+                    date = "2022.03.24"
+                )
+                CertificateItemComponent(qualification = sample)
+                Spacer(modifier = Modifier.size(30.dp))
             }
         }
     }

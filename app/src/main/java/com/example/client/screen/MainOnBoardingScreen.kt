@@ -28,7 +28,7 @@ import com.example.client.data.model.viewmodel.MainOnBoardingViewModel
 @Composable
 fun MainOnboardingScreen(mainOnBoardingViewModel: MainOnBoardingViewModel = viewModel(), navController: NavController) {
 
-    var nickname = TestUserInfo.TEST_USERNAME
+    val nickname = TestUserInfo.TEST_USERNAME
 
     val questions = listOf(
         "현재 경제활동 상태",
@@ -38,7 +38,7 @@ fun MainOnboardingScreen(mainOnBoardingViewModel: MainOnBoardingViewModel = view
 
     var currentQuestionIndex by remember { mutableStateOf(0) }
     var selectedAnswer by remember { mutableStateOf("") }
-    var additionalAnswers = remember { mutableStateListOf<String>() }
+    val additionalAnswers = remember { mutableStateListOf<String>() }
     var selectedJobFields by remember { mutableStateOf<List<JobField>>(emptyList()) }
 
     Column(
@@ -165,7 +165,7 @@ fun MainOnboardingScreen(mainOnBoardingViewModel: MainOnBoardingViewModel = view
                         } else {
                             additionalAnswers.add(selectedAnswer) // 마지막 질문의 답변 추가
                             // API 요청 구현
-                            mainOnBoardingViewModel.submitOnBoarding(
+                            mainOnBoardingViewModel.submitOnboarding(
                                 additionalAnswers[0],
                                 additionalAnswers[1],
                                 selectedJobFields.map { it.name } // 직업 필드를 배열로 전달

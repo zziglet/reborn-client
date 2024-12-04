@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class JobPostViewModel(private val repository: JobPostRepository) : ViewModel() {
-    fun getJobList(jobTitle: String,
+    fun getJob(jobTitle: String,
                    companyName: String,
                    hmUrl: String,
                    workAddr: String) {

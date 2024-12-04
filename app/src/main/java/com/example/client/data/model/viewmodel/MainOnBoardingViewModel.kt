@@ -8,7 +8,7 @@ import retrofit2.Response
 
 class MainOnBoardingViewModel(private val repository: MainOnBoardingRepository) : ViewModel() {
 
-    fun submitOnBoarding(employmentStatus: String, region: String, interestedField: List<String>) {
+    fun submitOnboarding(employmentStatus: String, region: String, interestedField: List<String>) {
         viewModelScope.launch {
             // API 호출
             val response: Response<Void> = repository.submitOnboarding(employmentStatus, region, interestedField)

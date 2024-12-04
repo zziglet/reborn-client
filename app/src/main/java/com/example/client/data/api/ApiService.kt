@@ -6,15 +6,52 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 interface ApiService {
+    /** 카카오 로그인 */
+    @POST("auth/kakao")
+    fun sendKakaoToken(@Body request: KakaoLoginRequest): Call<Void>
+
+    /** 온보딩 */
     @POST("users/onboarding")
     suspend fun submitOnboarding(@Body request: MainOnBoardingRequest): Response<Void>
 
-    @GET("jobs/posts")
-    suspend fun getJobList(): Response<Void>
+    @POST("users/onboarding/jobs")
+    suspend fun submitJobOnboarding(): Response<Void>
 
-    @POST("auth/kakao")
-    fun sendKakaoToken(@Body request: KakaoLoginRequest): Call<Void>
+    /** 일자리 */
+    @GET("jobs/posts")
+    suspend fun getJob(): Response<Void>
+
+    @GET("jobs/posts/search")
+    suspend fun searchJob(): Response<Void>
+
+    @GET("jobs/posts/licenses") //사용자가 클릭한 자격증 이름으로 request
+    suspend fun getJobLicenses(): Response<Void>
+
+    /** 자격증 리스트 소환 */
+    @GET("licenses")
+    suspend fun getLicenses(): Response<Void>
+
+    /** 마이페이지 */
+    @GET("users/mypage")
+    suspend fun getUser(): Response<Void>
+
+    @PATCH("users/mypage") //닉네임, 프로필이미지, 재직여부 수정
+    suspend fun setUser(): Response<Void>
+
+    @PATCH("users/mypage/region") //동네 수정
+    suspend fun setUserRegion(): Response<Void>
+
+    @PATCH("users/mypage/interests") //관심분야 수정
+    suspend fun setUserInterests(): Response<Void>
+
+    //자격증 수정 추가
+
+    /** 커뮤니티 */
+    @GET("community/posts") //커뮤니티 더미데이터 불러오기
+    suspend fun getCommunity(): Response<Void>
+
 }

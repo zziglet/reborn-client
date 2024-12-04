@@ -12,6 +12,6 @@ class JobPostRepository(private val apiService: ApiService) {
         workAddr: String
     ): Response<Void> {
         // API 호출
-        return apiService.getJobList()
+        return apiService.getJob()
     }
 }

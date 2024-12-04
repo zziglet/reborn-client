@@ -189,7 +189,9 @@ fun MyPageScreen(navController: NavController) {
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
 
-                ButtonComponent(buttonText = "화양동", buttonColorType = ButtonColorEnum.Green) { }
+                ButtonComponent(
+                    buttonText = "화양동", buttonColorType = ButtonColorEnum.Green, onClick = {}
+                )
                 Spacer(modifier = Modifier.size(30.dp))
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 

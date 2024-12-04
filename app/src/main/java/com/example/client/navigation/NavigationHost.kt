@@ -43,7 +43,9 @@ fun NavigationHost(
         }
 
         composable(NavRoutes.MyPage.route) {
-            MyPageScreen(navController)
+            MyPageScreen(
+                myPageViewModel = viewModels.myPageViewModel,
+                navController = navController)
         }
 
     }

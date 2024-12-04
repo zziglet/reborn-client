@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,19 +38,28 @@ import androidx.navigation.NavController
 import com.example.client.R
 import com.example.client.component.all.ButtonColorEnum
 import com.example.client.component.all.ButtonComponent
-import com.example.client.component.all.CertificateComponent
-import com.example.client.component.all.JobFieldComponent
 import com.example.client.component.mypage.CertificateItemComponent
-import com.example.client.component.mypage.Qualification
+import com.example.client.component.mypage.JobFieldViewComponent
 import com.example.client.component.mypage.RebornTemperatureComponent
+import com.example.client.data.model.response.LicenseResponse
+import com.example.client.data.model.viewmodel.MyPageViewModel
 import com.example.client.domain.TestUserInfo
+import java.util.Date
 
 @Composable
-fun MyPageScreen(navController: NavController) {
+fun MyPageScreen(
+    myPageViewModel: MyPageViewModel,
+    navController: NavController
+) {
     var nickname by remember { mutableStateOf<String?>(null) }
+
+    val user by myPageViewModel.user.collectAsState()
+    val isLoading by myPageViewModel.isLoading.collectAsState()
+    val error by myPageViewModel.error.collectAsState()
 
     LaunchedEffect(Unit) {
         nickname = TestUserInfo.TEST_USERNAME
+        myPageViewModel.getUser()
     }
 
     LazyColumn(
@@ -110,18 +120,20 @@ fun MyPageScreen(navController: NavController) {
                 )
 
                 // todo : 사용자 현 재직 상태 표시
-                Text(
-                    text = "재직 중",
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        lineHeight = 33.6.sp,
-                        fontFamily = FontFamily(Font(R.font.pretendardregular)),
-                        fontWeight = FontWeight(600),
-                        color = Color(0xFF000000),
-                        textAlign = TextAlign.Center,
-                    ),
-                    modifier = Modifier.padding(bottom = 5.dp)
-                )
+                user?.let {
+                    Text(
+                        text = it.employmentStatus,
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            lineHeight = 33.6.sp,
+                            fontFamily = FontFamily(Font(R.font.pretendardregular)),
+                            fontWeight = FontWeight(600),
+                            color = Color(0xFF000000),
+                            textAlign = TextAlign.Center,
+                        ),
+                        modifier = Modifier.padding(bottom = 5.dp)
+                    )
+                }
 
                 Image(
                     painter = painterResource(id = R.drawable.icon_rebornlogo),
@@ -146,7 +158,7 @@ fun MyPageScreen(navController: NavController) {
                         modifier = Modifier.padding(bottom = 10.dp)
                     )
                 }
-                RebornTemperatureComponent(modifier = Modifier.padding(bottom = 20.dp))
+                RebornTemperatureComponent(temperature = (user?.rebornTemperature ?: 1) * 0.01f, modifier = Modifier.padding(bottom = 20.dp))
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
                 //todo: 관심 분야 수정 아이콘
@@ -167,7 +179,9 @@ fun MyPageScreen(navController: NavController) {
                     )
                 )
 
-                JobFieldComponent {  }
+                JobFieldViewComponent(
+                    selectedFields = user?.interestedField ?: emptyList()
+                )
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
                 // todo: 나의 동네 수정 아이콘
@@ -189,7 +203,7 @@ fun MyPageScreen(navController: NavController) {
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
 
-                ButtonComponent(buttonText = "화양동", buttonColorType = ButtonColorEnum.Green) { }
+                user?.let { ButtonComponent(buttonText = it.region, buttonColorType = ButtonColorEnum.Green) { } }
                 Spacer(modifier = Modifier.size(30.dp))
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
@@ -211,11 +225,18 @@ fun MyPageScreen(navController: NavController) {
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
                 Spacer(modifier = Modifier.size(15.dp))
-                val sample = Qualification(
-                    title = "문화해설사",
-                    date = "2022.03.24"
-                )
-                CertificateItemComponent(qualification = sample)
+                
+                user?.licenses?.forEach { license ->
+                    CertificateItemComponent(
+                        license = LicenseResponse(
+                            jmfldnm = license.jmfldnm,
+                            seriesnm = license.seriesnm,
+                            //todo: 자격증 Date 추가
+                            date = Date()
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
                 Spacer(modifier = Modifier.size(30.dp))
             }
         }

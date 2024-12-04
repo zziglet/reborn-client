@@ -25,6 +25,7 @@ import com.example.client.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RebornTemperatureComponent(
+    temperature: Float,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -40,7 +41,7 @@ fun RebornTemperatureComponent(
             textAlign = TextAlign.Center
         )
         Slider(
-            value = 0.4f,
+            value = temperature,
             onValueChange = {},
             colors = SliderDefaults.colors(
                 thumbColor = Color(0xFF455A30),
@@ -69,5 +70,5 @@ fun RebornTemperatureComponent(
 @Preview
 @Composable
 fun RebornTemperatureComponentPreview() {
-    RebornTemperatureComponent()
+    RebornTemperatureComponent(0.5f)
 }

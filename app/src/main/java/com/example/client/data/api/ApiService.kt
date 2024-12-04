@@ -3,6 +3,7 @@ package com.example.client.data.api
 import com.example.client.data.model.request.KakaoLoginRequest
 import com.example.client.data.model.request.MainOnBoardingRequest
 import com.example.client.data.model.response.JobPostResponse
+import com.example.client.data.model.response.MyPageResponse
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -38,7 +39,7 @@ interface ApiService {
 
     /** 마이페이지 */
     @GET("users/mypage")
-    suspend fun getUser(): Response<Void>
+    suspend fun getUser(): Response<MyPageResponse>
 
     @PATCH("users/mypage") //닉네임, 프로필이미지, 재직여부 수정
     suspend fun setUser(): Response<Void>

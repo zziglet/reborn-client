@@ -11,7 +11,10 @@ import com.example.client.data.model.viewmodel.JobPostViewModelFactory
 import com.example.client.data.repository.MainOnBoardingRepository
 import com.example.client.data.model.viewmodel.MainOnBoardingViewModel
 import com.example.client.data.model.viewmodel.MainOnBoardingViewModelFactory
+import com.example.client.data.model.viewmodel.MyPageViewModel
+import com.example.client.data.model.viewmodel.MyPageViewModelFactory
 import com.example.client.data.repository.JobPostRepository
+import com.example.client.data.repository.MyPageRepository
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +27,7 @@ class MainActivity : ComponentActivity() {
         val repositories = AppRepositories(
             mainOnBoardingRepository = MainOnBoardingRepository(apiService),
             jobPostRepository = JobPostRepository(apiService),
+            myPageRepository = MyPageRepository(apiService),
             // 필요한 다른 repository 추가
         )
 
@@ -35,6 +39,9 @@ class MainActivity : ComponentActivity() {
             jobPostViewModel = ViewModelProvider(this,
                 JobPostViewModelFactory(repositories.jobPostRepository)
             ).get(JobPostViewModel::class.java),
+            myPageViewModel = ViewModelProvider(this,
+                MyPageViewModelFactory(repositories.myPageRepository)
+            ).get(MyPageViewModel::class.java)
             // 필요한 다른 viewModel 추가
         )
 
@@ -47,7 +54,8 @@ class MainActivity : ComponentActivity() {
 // Repository들을 담는 데이터 클래스
 data class AppRepositories(
     val mainOnBoardingRepository: MainOnBoardingRepository,
-    val jobPostRepository: JobPostRepository
+    val jobPostRepository: JobPostRepository,
+    val myPageRepository: MyPageRepository
     // 필요한 다른 repository 추가
 )
 
@@ -55,5 +63,6 @@ data class AppRepositories(
 data class AppViewModels(
     val mainOnBoardingViewModel: MainOnBoardingViewModel,
     val jobPostViewModel: JobPostViewModel,
+    val myPageViewModel: MyPageViewModel,
     // 필요한 다른 viewModel 추가
 )

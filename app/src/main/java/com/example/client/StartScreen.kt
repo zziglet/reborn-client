@@ -10,10 +10,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
 import com.example.client.navigation.BottomNavigationBar
 import com.example.client.navigation.NavigationHost
-import com.example.client.viewmodel.MainOnBoardingViewModel
+import com.example.client.data.model.viewmodel.MainOnBoardingViewModel
 
 @Composable
-fun StartScreen(onBoardingViewModel: MainOnBoardingViewModel){
+fun StartScreen(viewModels: AppViewModels) {
     val navController = rememberNavController()
     Scaffold(
         modifier = Modifier.background(color = Color.White),
@@ -26,8 +26,10 @@ fun StartScreen(onBoardingViewModel: MainOnBoardingViewModel){
                 .padding(contentPadding)
                 .background(color = Color.White)
         ) {
-            //NavigationHost 오타 수정
-            NavigationHost(navController = navController, onBoardingViewModel)
+            NavigationHost(
+                navController = navController,
+                viewModels = viewModels
+            )
         }
     }
 }

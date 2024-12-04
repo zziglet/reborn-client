@@ -23,10 +23,10 @@ import com.example.client.component.all.JobFieldComponent
 import com.example.client.component.onboarding.PageIndexComponent
 import com.example.client.component.onboarding.PickerComponent
 import com.example.client.domain.TestUserInfo
-import com.example.client.viewmodel.MainOnBoardingViewModel
+import com.example.client.data.model.viewmodel.MainOnBoardingViewModel
 
 @Composable
-fun MainOnboardingScreen(onBoardingViewModel: MainOnBoardingViewModel = viewModel(), navController: NavController) {
+fun MainOnboardingScreen(mainOnBoardingViewModel: MainOnBoardingViewModel = viewModel(), navController: NavController) {
 
     var nickname = TestUserInfo.TEST_USERNAME
 
@@ -165,7 +165,7 @@ fun MainOnboardingScreen(onBoardingViewModel: MainOnBoardingViewModel = viewMode
                         } else {
                             additionalAnswers.add(selectedAnswer) // 마지막 질문의 답변 추가
                             // API 요청 구현
-                            onBoardingViewModel.submitOnBoarding(
+                            mainOnBoardingViewModel.submitOnBoarding(
                                 additionalAnswers[0],
                                 additionalAnswers[1],
                                 selectedJobFields.map { it.name } // 직업 필드를 배열로 전달

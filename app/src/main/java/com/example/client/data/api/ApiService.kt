@@ -1,5 +1,6 @@
 package com.example.client.data.api
 
+import com.example.client.data.model.request.JobPostLicenseRequest
 import com.example.client.data.model.request.KakaoLoginRequest
 import com.example.client.data.model.request.MainOnBoardingRequest
 import com.example.client.data.model.request.mypage.EditInterestedRequest
@@ -34,7 +35,7 @@ interface ApiService {
     suspend fun searchJob(): Response<Void>
 
     @GET("jobs/posts/licenses") //사용자가 클릭한 자격증 이름으로 request
-    suspend fun getJobLicenses(): Response<Void>
+    suspend fun getJobLicense(@Body request: JobPostLicenseRequest): Response<List<JobPostResponse>>
 
     /** 자격증 리스트 소환 */
     @GET("licenses")

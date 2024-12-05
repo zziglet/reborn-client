@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
 import com.example.client.data.api.RetrofitClient
+import com.example.client.data.model.viewmodel.JobPostLicenseViewModel
+import com.example.client.data.model.viewmodel.JobPostLicenseViewModelFactory
 import com.example.client.data.model.viewmodel.JobPostViewModel
 import com.example.client.data.model.viewmodel.JobPostViewModelFactory
 import com.example.client.data.repository.MainOnBoardingRepository
@@ -19,6 +21,7 @@ import com.example.client.data.model.viewmodel.mypage.EditProfileViewModel
 import com.example.client.data.model.viewmodel.mypage.EditProfileViewModelFactory
 import com.example.client.data.model.viewmodel.mypage.EditRegionViewModel
 import com.example.client.data.model.viewmodel.mypage.EditRegionViewModelFactory
+import com.example.client.data.repository.JobPostLicenseRepository
 import com.example.client.data.repository.JobPostRepository
 import com.example.client.data.repository.MyPageRepository
 import com.example.client.data.repository.mypage.EditInterestedRepository
@@ -36,6 +39,7 @@ class MainActivity : ComponentActivity() {
         val repositories = AppRepositories(
             mainOnBoardingRepository = MainOnBoardingRepository(apiService),
             jobPostRepository = JobPostRepository(apiService),
+            jobPostLicenseRepository = JobPostLicenseRepository(apiService),
             myPageRepository = MyPageRepository(apiService),
             editInterestedRepository = EditInterestedRepository(apiService),
             editRegionRepository = EditRegionRepository(apiService),
@@ -51,6 +55,9 @@ class MainActivity : ComponentActivity() {
             jobPostViewModel = ViewModelProvider(this,
                 JobPostViewModelFactory(repositories.jobPostRepository)
             ).get(JobPostViewModel::class.java),
+            jobPostLicenseViewModel = ViewModelProvider(this,
+                JobPostLicenseViewModelFactory(repositories.jobPostLicenseRepository)
+            ).get(JobPostLicenseViewModel::class.java),
             myPageViewModel = ViewModelProvider(this,
                 MyPageViewModelFactory(repositories.myPageRepository)
             ).get(MyPageViewModel::class.java),
@@ -76,6 +83,7 @@ class MainActivity : ComponentActivity() {
 data class AppRepositories(
     val mainOnBoardingRepository: MainOnBoardingRepository,
     val jobPostRepository: JobPostRepository,
+    val jobPostLicenseRepository: JobPostLicenseRepository,
     val myPageRepository: MyPageRepository,
     val editInterestedRepository: EditInterestedRepository,
     val editRegionRepository: EditRegionRepository,
@@ -87,6 +95,7 @@ data class AppRepositories(
 data class AppViewModels(
     val mainOnBoardingViewModel: MainOnBoardingViewModel,
     val jobPostViewModel: JobPostViewModel,
+    val jobPostLicenseViewModel: JobPostLicenseViewModel,
     val myPageViewModel: MyPageViewModel,
     val editInterestedViewModel: EditInterestedViewModel,
     val editRegionViewModel: EditRegionViewModel,

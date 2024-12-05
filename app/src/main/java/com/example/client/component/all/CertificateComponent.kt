@@ -2,6 +2,7 @@ package com.example.client.component.all
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,19 +20,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.client.R
+import com.example.client.data.model.response.LicensesGetResponse
 
 @Composable
 fun CertificateComponent(
     type: String,
     name: String,
-    date: String
+    date: String,
+    onItemSelected:(LicensesGetResponse)->Unit,
+    isSelected:Boolean,
+    modifier: Modifier = Modifier
 ) {
+    val buttonColorType = if (isSelected) ButtonColorEnum.Green else ButtonColorEnum.LightGreen
     Box(
         modifier = Modifier
+            .then(modifier)
+            .clickable { onItemSelected(LicensesGetResponse(jmfldnm = name, seriesnm = type)) }
             .shadow(elevation = 4.dp, spotColor = Color(0x40000000), ambientColor = Color(0x40000000))
             .width(312.dp)
             .height(119.dp)
-            .background(color = Color(0xFF8FA86A), shape = RoundedCornerShape(size = 20.dp))
+            .background(color = buttonColorType.color, shape = RoundedCornerShape(size = 20.dp))
     ) {
 
         Text(
@@ -72,14 +80,4 @@ fun CertificateComponent(
                 )
         )
     }
-}
-
-@Preview
-@Composable
-fun CertificateComponentPreview() {
-    CertificateComponent(
-        type = "기술사",
-        name = "섬유기술사",
-        date = "25.06.08"
-    )
 }

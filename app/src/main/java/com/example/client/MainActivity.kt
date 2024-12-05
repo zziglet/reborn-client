@@ -6,11 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
 import com.example.client.data.api.RetrofitClient
+import com.example.client.data.model.viewmodel.JobOnBoardingViewModel
+import com.example.client.data.model.viewmodel.JobOnBoardingViewModelFactory
 import com.example.client.data.model.viewmodel.JobPostViewModel
 import com.example.client.data.model.viewmodel.JobPostViewModelFactory
 import com.example.client.data.repository.MainOnBoardingRepository
 import com.example.client.data.model.viewmodel.MainOnBoardingViewModel
 import com.example.client.data.model.viewmodel.MainOnBoardingViewModelFactory
+import com.example.client.data.repository.JobOnBoardingRepository
 import com.example.client.data.repository.JobPostRepository
 
 class MainActivity : ComponentActivity() {
@@ -24,6 +27,7 @@ class MainActivity : ComponentActivity() {
         val repositories = AppRepositories(
             mainOnBoardingRepository = MainOnBoardingRepository(apiService),
             jobPostRepository = JobPostRepository(apiService),
+            jobOnBoardingRepository = JobOnBoardingRepository(apiService)
             // 필요한 다른 repository 추가
         )
 
@@ -35,6 +39,9 @@ class MainActivity : ComponentActivity() {
             jobPostViewModel = ViewModelProvider(this,
                 JobPostViewModelFactory(repositories.jobPostRepository)
             ).get(JobPostViewModel::class.java),
+            jobOnBoardingViewModel = ViewModelProvider(this,
+                JobOnBoardingViewModelFactory(repositories.jobOnBoardingRepository)
+            ).get(JobOnBoardingViewModel::class.java)
             // 필요한 다른 viewModel 추가
         )
 
@@ -47,7 +54,8 @@ class MainActivity : ComponentActivity() {
 // Repository들을 담는 데이터 클래스
 data class AppRepositories(
     val mainOnBoardingRepository: MainOnBoardingRepository,
-    val jobPostRepository: JobPostRepository
+    val jobPostRepository: JobPostRepository,
+    val jobOnBoardingRepository: JobOnBoardingRepository
     // 필요한 다른 repository 추가
 )
 
@@ -55,5 +63,6 @@ data class AppRepositories(
 data class AppViewModels(
     val mainOnBoardingViewModel: MainOnBoardingViewModel,
     val jobPostViewModel: JobPostViewModel,
+    val jobOnBoardingViewModel: JobOnBoardingViewModel
     // 필요한 다른 viewModel 추가
 )

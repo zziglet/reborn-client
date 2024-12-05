@@ -1,5 +1,6 @@
 package com.example.client.data.api
 
+import com.example.client.data.model.request.JobOnBoardingRequest
 import com.example.client.data.model.request.KakaoLoginRequest
 import com.example.client.data.model.request.MainOnBoardingRequest
 import com.example.client.data.model.response.LicensesGetResponse
@@ -20,7 +21,7 @@ interface ApiService {
     suspend fun submitOnboarding(@Body request: MainOnBoardingRequest): Response<Void>
 
     @POST("users/onboarding/jobs")
-    suspend fun submitJobOnboarding(): Response<Void>
+    suspend fun submitJobOnboarding(@Body request: JobOnBoardingRequest): Response<Void>
 
     /** 일자리 */
     @GET("jobs/posts")

@@ -121,7 +121,8 @@ fun MyPageScreen(
                 Icon(
                     painter = painterResource(id = R.drawable.rounded_edit_square_24),
                     contentDescription = null,
-                    modifier = Modifier.padding(top = 20.dp, start = 300.dp)
+                    modifier = Modifier
+                        .padding(top = 20.dp, start = 300.dp)
                         .clickable {
                             navController.navigate("MyPageProfile")
                         }
@@ -184,13 +185,17 @@ fun MyPageScreen(
                         modifier = Modifier.padding(bottom = 10.dp)
                     )
                 }
-                RebornTemperatureComponent(temperature = (user?.rebornTemperature ?: 1) * 0.01f, modifier = Modifier.padding(bottom = 20.dp))
+                RebornTemperatureComponent(
+                    temperature = (user?.rebornTemperature ?: 1) * 0.01f,
+                    modifier = Modifier.padding(bottom = 20.dp)
+                )
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
                 Icon(
                     painter = painterResource(id = R.drawable.rounded_edit_square_24),
                     contentDescription = null,
-                    modifier = Modifier.padding(top = 20.dp, start = 300.dp)
+                    modifier = Modifier
+                        .padding(top = 20.dp, start = 300.dp)
                         .clickable {
                             navController.navigate("MyPageInterest")
                         }
@@ -215,7 +220,8 @@ fun MyPageScreen(
                 Icon(
                     painter = painterResource(id = R.drawable.rounded_edit_square_24),
                     contentDescription = null,
-                    modifier = Modifier.padding(top = 20.dp, start = 300.dp)
+                    modifier = Modifier
+                        .padding(top = 20.dp, start = 300.dp)
                         .clickable {
                             navController.navigate("MyPageRegion")
                         }
@@ -233,7 +239,12 @@ fun MyPageScreen(
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
 
-                user?.let { ButtonComponent(buttonText = it.region, buttonColorType = ButtonColorEnum.Green) { } }
+                user?.let {
+                    ButtonComponent(
+                        buttonText = it.region,
+                        buttonColorType = ButtonColorEnum.Green,
+                        onClick = {})
+                }
                 Spacer(modifier = Modifier.size(30.dp))
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 

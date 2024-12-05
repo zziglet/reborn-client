@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.example.client.AppViewModels
 import com.example.client.screen.JobMainScreen
+import com.example.client.screen.JobOnBoardingScreen
 import com.example.client.screen.LoginScreen
 import com.example.client.screen.MainScreen
 import com.example.client.screen.MainOnboardingScreen
@@ -43,7 +44,17 @@ fun NavigationHost(
         }
 
         composable(NavRoutes.MyPage.route) {
-            MyPageScreen(navController)
+            MyPageScreen(
+                sharedCertificationViewModel = viewModels.sharedCertificationViewModel,
+                navController = navController)
+        }
+
+        composable(NavRoutes.JobOnboarding.route){
+            JobOnBoardingScreen(
+                sharedViewModel = viewModels.sharedCertificationViewModel,
+                viewModel = viewModels.jobOnBoardingViewModel,
+                navController = navController
+            )
         }
 
     }

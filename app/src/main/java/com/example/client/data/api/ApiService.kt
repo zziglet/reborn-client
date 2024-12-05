@@ -3,6 +3,7 @@ package com.example.client.data.api
 import com.example.client.data.model.request.KakaoLoginRequest
 import com.example.client.data.model.request.MainOnBoardingRequest
 import com.example.client.data.model.request.mypage.EditInterestedRequest
+import com.example.client.data.model.request.mypage.EditProfileRequest
 import com.example.client.data.model.request.mypage.EditRegionRequest
 import com.example.client.data.model.response.JobPostResponse
 import com.example.client.data.model.response.MyPageResponse
@@ -44,7 +45,7 @@ interface ApiService {
     suspend fun getUser(): Response<MyPageResponse>
 
     @PATCH("users/mypage") //닉네임, 프로필이미지, 재직여부 수정
-    suspend fun setUser(): Response<Void>
+    suspend fun setUserProfile(@Body request: EditProfileRequest): Response<Void>
 
     @PATCH("users/mypage/region") //동네 수정
     suspend fun setUserRegion(@Body request: EditRegionRequest): Response<Void>

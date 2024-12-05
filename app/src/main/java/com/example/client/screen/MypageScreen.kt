@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -26,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -57,14 +59,12 @@ fun MyPageScreen(
     navController: NavController
 ) {
     var nickname by remember { mutableStateOf<String?>(null) }
-
     val user by myPageViewModel.user.collectAsState()
-    val isLoading by myPageViewModel.isLoading.collectAsState()
-    val error by myPageViewModel.error.collectAsState()
 
     LaunchedEffect(Unit) {
         nickname = TestUserInfo.TEST_USERNAME
         myPageViewModel.getUser()
+        TestUserInfo.USERIMG = user?.profileImg ?: TestUserInfo.USERIMG
     }
 
     LazyColumn(
@@ -99,8 +99,7 @@ fun MyPageScreen(
         item {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp),
+                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -117,11 +116,13 @@ fun MyPageScreen(
 
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
-                // todo : 사용자 닉네임 수정
                 Icon(
                     painter = painterResource(id = R.drawable.rounded_edit_square_24),
                     contentDescription = null,
                     modifier = Modifier.padding(top = 20.dp, start = 300.dp)
+                        .clickable {
+                            navController.navigate("MyPageProfile")
+                        }
                 )
 
                 user?.let {
@@ -148,9 +149,9 @@ fun MyPageScreen(
                             .build(),
                         contentDescription = "Profile Image",
                         modifier = Modifier
-                            .width(108.dp)
+                            .width(83.dp)
                             .height(83.dp)
-                            .padding(bottom = 5.dp),
+                            .clip(CircleShape),
                         error = painterResource(id = R.drawable.icon_rebornlogo),  // 이미지 로드 실패시 기본 이미지
                         placeholder = painterResource(id = R.drawable.icon_rebornlogo)  // 로딩 중 표시할 이미지
                     )
@@ -165,6 +166,7 @@ fun MyPageScreen(
                             .padding(bottom = 5.dp)
                     )
                 }
+                Spacer(modifier = Modifier.size(10.dp))
 
                 nickname?.let {
                     Text(

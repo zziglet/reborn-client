@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,12 +39,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.client.R
+import com.example.client.data.model.viewmodel.MyPageViewModel
 import com.example.client.domain.TestUserInfo
 
 // [todo]: login view 출력
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(
+    myPageViewModel: MyPageViewModel,
+    navController: NavController) {
     val context = LocalContext.current
+
+    val user by myPageViewModel.user.collectAsState()
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -149,6 +155,9 @@ fun LoginScreen(navController: NavController) {
             Button(
                 onClick = {
                     if (username == TestUserInfo.TEST_USERNAME && password == TestUserInfo.TEST_PASSWORD) {
+                        myPageViewModel.getUser()
+                        TestUserInfo.USERIMG = user?.profileImg ?: ""
+                        println(TestUserInfo.USERIMG)
                         navController.navigate("MainOnboarding")
                     } else {
                         Toast.makeText(context,"로그인 실패",Toast.LENGTH_SHORT).show()

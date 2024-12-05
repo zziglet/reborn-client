@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -34,7 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.example.client.R
 
 @Composable
-fun SelectFieldComponent() {
+fun SelectFieldComponent(onStatusSelected: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf("재직") }
 
@@ -49,6 +50,7 @@ fun SelectFieldComponent() {
     )
     Spacer(modifier = Modifier.size(10.dp))
     Row(
+        modifier = Modifier.width(320.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -58,6 +60,10 @@ fun SelectFieldComponent() {
             placeholder = { Text("선택된 옵션") },
             modifier = Modifier
                 .fillMaxWidth(),
+            textStyle = TextStyle(
+                fontSize = 18.sp,
+                fontFamily = FontFamily(Font(R.font.pretendardregular)),
+            ),
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color.White,
                 focusedContainerColor = Color.White,
@@ -92,6 +98,7 @@ fun SelectFieldComponent() {
                     onClick = {
                         selectedOption = option
                         expanded = false
+                        onStatusSelected(option)
                     },
                     modifier = Modifier.background(Color.White)
                 )

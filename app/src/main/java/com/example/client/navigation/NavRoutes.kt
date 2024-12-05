@@ -8,4 +8,5 @@ sealed class NavRoutes(val route: String) {
     object MyPage : NavRoutes("MyPage")
     object MyPageInterest : NavRoutes("MyPageInterest")
     object MyPageRegion : NavRoutes("MyPageRegion")
+    object MyPageProfile : NavRoutes("MyPageProfile")
 }

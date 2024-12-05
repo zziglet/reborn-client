@@ -14,34 +14,10 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class JobOnBoardingViewModel(private val repository: JobOnBoardingRepository) : ViewModel() {
-    private val _licensesState = MutableStateFlow<List<LicensesGetResponse>>(emptyList())
-    val licensesState: StateFlow<List<LicensesGetResponse>> = _licensesState
-
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading
-
-    private val _errorMessage = MutableStateFlow<String?>(null)
-    val errorMessage: StateFlow<String?> = _errorMessage
 
     private val _selectedLicenses = MutableStateFlow<List<LicensesGetResponse>>(emptyList())
     val selectedLicenses: StateFlow<List<LicensesGetResponse>> = _selectedLicenses
 
-    fun fetchLicenses() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            _errorMessage.value = null
-
-            repository.getLicenses().fold(
-                onSuccess = { licenses ->
-                    _licensesState.value = licenses
-                },
-                onFailure = { throwable ->
-                    _errorMessage.value = throwable.message ?: "알 수 없는 에러 발생"
-                }
-            )
-            _isLoading.value = false
-        }
-    }
 
     fun toggleLicencesSelection(license: LicensesGetResponse) {
         _selectedLicenses.value = if (_selectedLicenses.value.contains(license)) {

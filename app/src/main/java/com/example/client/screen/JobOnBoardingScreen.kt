@@ -38,9 +38,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.client.R
 import com.example.client.component.all.ButtonColorEnum
 import com.example.client.component.all.ButtonComponent
@@ -48,11 +48,16 @@ import com.example.client.component.all.CertificateComponent
 import com.example.client.component.all.DropDownMenuComponent
 import com.example.client.component.onboarding.PageIndexComponent
 import com.example.client.data.model.viewmodel.JobOnBoardingViewModel
+import com.example.client.data.model.viewmodel.SharedCertificationViewModel
 import com.example.client.domain.TestUserInfo
-import kotlinx.coroutines.flow.forEach
+import com.example.client.navigation.NavRoutes
 
 @Composable
-fun JobOnBoardingScreen(viewModel: JobOnBoardingViewModel) {
+fun JobOnBoardingScreen(
+    sharedViewModel: SharedCertificationViewModel,
+    viewModel: JobOnBoardingViewModel,
+    navController: NavController
+) {
     val nickname = TestUserInfo.TEST_USERNAME
     var currentQuestionIndex by remember { mutableIntStateOf(0) }
     var selectGender by remember { mutableStateOf<String?>(null) }
@@ -348,11 +353,13 @@ fun JobOnBoardingScreen(viewModel: JobOnBoardingViewModel) {
                         buttonColorType = if (selectedCertificateAnswer == null) ButtonColorEnum.LightGreen else ButtonColorEnum.Green,
                         onClick = {
                             if (selectedCertificateAnswer == certificateField[0]) { // 추가하기
-                                // Todo : 자격증 추가하기
                                 currentQuestionIndex = 3
 
                             } else if (selectedCertificateAnswer == certificateField[1]) { // 보유한 자격증 없음
-                                // Todo : 일자리 메인 화면으로 이동
+                                // Todo: nav
+                                navController.navigate(NavRoutes.JobMain.route) {
+                                    popUpTo(NavRoutes.JobOnboarding.route) { inclusive = true }
+                                }
                             }
                         },
                         modifier = Modifier
@@ -361,11 +368,11 @@ fun JobOnBoardingScreen(viewModel: JobOnBoardingViewModel) {
                 }
 
                 3 -> {
-                    val licensesState by viewModel.licensesState.collectAsState()
-                    val isLoading by viewModel.isLoading.collectAsState()
-                    val errorMessage by viewModel.errorMessage.collectAsState()
+                    val licensesState by sharedViewModel.licensesState.collectAsState()
+                    val isLoading by sharedViewModel.isLoading.collectAsState()
+                    val errorMessage by sharedViewModel.errorMessage.collectAsState()
                     LaunchedEffect(Unit) {
-                        viewModel.fetchLicenses()
+                        sharedViewModel.fetchLicenses()
                     }
                     Column(
                         modifier = Modifier.fillMaxWidth()
@@ -416,7 +423,7 @@ fun JobOnBoardingScreen(viewModel: JobOnBoardingViewModel) {
                                             CertificateComponent(
                                                 type = license.seriesnm,
                                                 name = license.jmfldnm,
-                                                date = "25.06.08",
+                                                date = license.expirationDate ?: "2024-12-05",
                                                 isSelected = isSelected,
                                                 onItemSelected = { selectedLicense ->
                                                     viewModel.toggleLicencesSelection(
@@ -520,6 +527,12 @@ fun JobOnBoardingScreen(viewModel: JobOnBoardingViewModel) {
                             val year = selectBirth?.toInt()
                             if (sex != null && year != null) {
                                 viewModel.submitJobOnboarding(sex, year)
+                                // Todo : User Info 에 정보 저장
+
+                                // Todo : 일자리 메인으로 이동
+                                navController.navigate(NavRoutes.JobMain.route) {
+                                    popUpTo(NavRoutes.JobOnboarding.route) { inclusive = true }
+                                }
                             }
                         },
                         modifier = Modifier

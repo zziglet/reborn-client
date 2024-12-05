@@ -42,10 +42,14 @@ import com.example.client.component.all.JobFieldComponent
 import com.example.client.component.mypage.CertificateItemComponent
 import com.example.client.component.mypage.Qualification
 import com.example.client.component.mypage.RebornTemperatureComponent
+import com.example.client.data.model.viewmodel.SharedCertificationViewModel
 import com.example.client.domain.TestUserInfo
 
 @Composable
-fun MyPageScreen(navController: NavController) {
+fun MyPageScreen(
+    sharedCertificationViewModel: SharedCertificationViewModel,
+    navController: NavController
+) {
     var nickname by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
@@ -167,7 +171,7 @@ fun MyPageScreen(navController: NavController) {
                     )
                 )
 
-                JobFieldComponent {  }
+                JobFieldComponent { }
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
                 // todo: 나의 동네 수정 아이콘

@@ -16,7 +16,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.client.R
@@ -35,7 +34,7 @@ fun CertificateComponent(
     Box(
         modifier = Modifier
             .then(modifier)
-            .clickable { onItemSelected(LicensesGetResponse(jmfldnm = name, seriesnm = type)) }
+            .clickable { onItemSelected(LicensesGetResponse(jmfldnm = name, seriesnm = type, expirationDate = date)) }
             .shadow(elevation = 4.dp, spotColor = Color(0x40000000), ambientColor = Color(0x40000000))
             .width(312.dp)
             .height(119.dp)

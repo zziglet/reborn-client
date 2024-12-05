@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.client.component.all.JobField
 import com.example.client.data.repository.mypage.EditInterestedRepository
+import com.example.client.domain.TestUserInfo
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -19,6 +20,7 @@ class EditInterestedViewModel(private val repository: EditInterestedRepository) 
                 val response: Response<Void> = repository.setUserInterests(fieldNames)
                 if (response.isSuccessful) {
                     println("Interest fields updated successfully!")
+                    TestUserInfo.INTEREST = fieldNames
                 } else {
                     println("Failed to update interest fields: ${response.code()}")
                 }

@@ -157,8 +157,18 @@ fun LoginScreen(
                     if (username == TestUserInfo.TEST_USERNAME && password == TestUserInfo.TEST_PASSWORD) {
                         myPageViewModel.getUser()
                         TestUserInfo.USERIMG = user?.profileImg ?: ""
+                        TestUserInfo.REGION = user?.region ?: ""
+                        TestUserInfo.INTEREST = user?.interestedField ?: listOf()
+                        TestUserInfo.EMPLOYMENT = user?.employmentStatus ?: ""
+                        TestUserInfo.REBORNTEMPERATURE = user?.rebornTemperature ?: 0
+                        //todo: 자격증 받아오기
                         println(TestUserInfo.USERIMG)
-                        navController.navigate("MainOnboarding")
+
+                        if(TestUserInfo.EMPLOYMENT == "" || TestUserInfo.INTEREST.isEmpty() || TestUserInfo.REGION == ""){
+                            navController.navigate("MainOnboarding")
+                        }else{
+                            navController.navigate("Main")
+                        }
                     } else {
                         Toast.makeText(context,"로그인 실패",Toast.LENGTH_SHORT).show()
                     }

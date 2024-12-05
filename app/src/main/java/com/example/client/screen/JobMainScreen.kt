@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,9 +19,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -164,10 +167,26 @@ fun JobMainScreen(
                                     .padding(top = 20.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                KeywordButtonComponent(
-                                    buttonText = "서울 중구",
-                                    onClick = {}
-                                )
+                                LazyRow(
+                                    modifier = Modifier.padding(horizontal = 10.dp),
+                                    userScrollEnabled = true,
+                                    contentPadding = PaddingValues(end = 10.dp)
+                                ) {
+                                    item {
+                                        // 지역 버튼 추가
+                                        KeywordButtonComponent(
+                                            buttonText = TestUserInfo.REGION,
+                                            onClick = {}
+                                        )
+                                    }
+                                    items(TestUserInfo.INTEREST) { interest ->
+                                        Spacer(modifier = Modifier.size(10.dp))
+                                        KeywordButtonComponent(
+                                            buttonText = interest,
+                                            onClick = {}
+                                        )
+                                    }
+                                }
                                 Spacer(modifier = Modifier.size(15.dp))
 
                                 when {

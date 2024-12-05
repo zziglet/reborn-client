@@ -178,10 +178,6 @@ fun EditProfileScreen(
                         ButtonColorEnum.Green else ButtonColorEnum.Gray
                 ) {
                     selectedImageUri?.let { uri ->
-                        // 이미지 URI를 TestUserInfo에 저장
-                        TestUserInfo.USERIMG = uri.toString()
-                        
-                        // URI를 직접 전달
                         editProfileViewModel.setUserProfile(
                             nickName = editNickname,
                             profileImg = uri.toString(),  // URI 문자열로 전달

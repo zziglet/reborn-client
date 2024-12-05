@@ -2,6 +2,7 @@ package com.example.client.data.api
 
 import com.example.client.data.model.request.KakaoLoginRequest
 import com.example.client.data.model.request.MainOnBoardingRequest
+import com.example.client.data.model.request.mypage.EditInterestedRequest
 import com.example.client.data.model.response.JobPostResponse
 import com.example.client.data.model.response.MyPageResponse
 import retrofit2.Call
@@ -48,7 +49,7 @@ interface ApiService {
     suspend fun setUserRegion(): Response<Void>
 
     @PATCH("users/mypage/interests") //관심분야 수정
-    suspend fun setUserInterests(): Response<Void>
+    suspend fun setUserInterests(@Body request: EditInterestedRequest): Response<Void>
 
     //자격증 수정 추가
 

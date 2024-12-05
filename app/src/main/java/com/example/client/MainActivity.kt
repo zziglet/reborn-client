@@ -13,8 +13,11 @@ import com.example.client.data.model.viewmodel.MainOnBoardingViewModel
 import com.example.client.data.model.viewmodel.MainOnBoardingViewModelFactory
 import com.example.client.data.model.viewmodel.MyPageViewModel
 import com.example.client.data.model.viewmodel.MyPageViewModelFactory
+import com.example.client.data.model.viewmodel.mypage.EditInterestedViewModel
+import com.example.client.data.model.viewmodel.mypage.EditInterestedViewModelFactory
 import com.example.client.data.repository.JobPostRepository
 import com.example.client.data.repository.MyPageRepository
+import com.example.client.data.repository.mypage.EditInterestedRepository
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +31,7 @@ class MainActivity : ComponentActivity() {
             mainOnBoardingRepository = MainOnBoardingRepository(apiService),
             jobPostRepository = JobPostRepository(apiService),
             myPageRepository = MyPageRepository(apiService),
+            editInterestedRepository = EditInterestedRepository(apiService)
             // 필요한 다른 repository 추가
         )
 
@@ -41,7 +45,10 @@ class MainActivity : ComponentActivity() {
             ).get(JobPostViewModel::class.java),
             myPageViewModel = ViewModelProvider(this,
                 MyPageViewModelFactory(repositories.myPageRepository)
-            ).get(MyPageViewModel::class.java)
+            ).get(MyPageViewModel::class.java),
+            editInterestedViewModel = ViewModelProvider(this,
+                EditInterestedViewModelFactory(repositories.editInterestedRepository)
+            ).get(EditInterestedViewModel::class.java),
             // 필요한 다른 viewModel 추가
         )
 
@@ -55,7 +62,8 @@ class MainActivity : ComponentActivity() {
 data class AppRepositories(
     val mainOnBoardingRepository: MainOnBoardingRepository,
     val jobPostRepository: JobPostRepository,
-    val myPageRepository: MyPageRepository
+    val myPageRepository: MyPageRepository,
+    val editInterestedRepository: EditInterestedRepository
     // 필요한 다른 repository 추가
 )
 
@@ -64,5 +72,6 @@ data class AppViewModels(
     val mainOnBoardingViewModel: MainOnBoardingViewModel,
     val jobPostViewModel: JobPostViewModel,
     val myPageViewModel: MyPageViewModel,
+    val editInterestedViewModel: EditInterestedViewModel
     // 필요한 다른 viewModel 추가
 )

@@ -2,6 +2,7 @@ package com.example.client.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -188,6 +189,9 @@ fun MyPageScreen(
                     painter = painterResource(id = R.drawable.rounded_edit_square_24),
                     contentDescription = null,
                     modifier = Modifier.padding(top = 20.dp, start = 300.dp)
+                        .clickable {
+                            navController.navigate("MyPageInterest")
+                        }
                 )
 
                 Text(

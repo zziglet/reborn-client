@@ -1,28 +1,37 @@
 package com.example.client.screen
 
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,8 +47,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.client.R
 import com.example.client.component.job.CertificateButtonComponent
@@ -48,14 +55,26 @@ import com.example.client.component.job.KeywordButtonComponent
 import com.example.client.component.all.TabLayoutComponent
 import com.example.client.data.model.viewmodel.JobPostViewModel
 import com.example.client.domain.TestUserInfo
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
-fun JobMainScreen(jobPostViewModel: JobPostViewModel = viewModel(), navController: NavController){
+fun JobMainScreen(
+    jobPostViewModel: JobPostViewModel,
+    navController: NavController
+) {
+    // Context를 상위 레벨에서 가져옴
+    val context = LocalContext.current
+    
     var nickname by remember { mutableStateOf<String?>(null) }
-
+    
+    // 상태 수집
+    val jobList by jobPostViewModel.jobList.collectAsState()
+    val isLoading by jobPostViewModel.isLoading.collectAsState()
+    val error by jobPostViewModel.error.collectAsState()
 
     LaunchedEffect(Unit) {
         nickname = TestUserInfo.TEST_USERNAME
+        jobPostViewModel.getJob()
     }
 
     LazyColumn(
@@ -141,48 +160,85 @@ fun JobMainScreen(jobPostViewModel: JobPostViewModel = viewModel(), navControlle
                 TabLayoutComponent(tabs = listOf("맞춤 일자리", "자격증 기반")) { page ->
                     when (page) {
                         0 -> {
-                            // 맞춤 일자리 리스트
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
+                                    .heightIn(min = 800.dp)
                                     .padding(top = 20.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                KeywordButtonComponent(
-                                    buttonText = "서울 중구",
-                                    onClick = {}
-                                )
+                                LazyRow(
+                                    modifier = Modifier.padding(horizontal = 10.dp),
+                                    userScrollEnabled = true,
+                                    contentPadding = PaddingValues(end = 10.dp)
+                                ) {
+                                    item {
+                                        // 지역 버튼 추가
+                                        KeywordButtonComponent(
+                                            buttonText = TestUserInfo.REGION,
+                                            onClick = {}
+                                        )
+                                    }
+                                    items(TestUserInfo.INTEREST) { interest ->
+                                        Spacer(modifier = Modifier.size(10.dp))
+                                        KeywordButtonComponent(
+                                            buttonText = interest,
+                                            onClick = {}
+                                        )
+                                    }
+                                }
                                 Spacer(modifier = Modifier.size(15.dp))
-                                JobListComponent(
-                                    companyName = "삼성전자",
-                                    jobTitle = "생산직",
-                                    location = "수원시 영통구",
-                                    onClick = { /* 상세 페이지로 이동 */ }
-                                )
-                                JobListComponent(
-                                    companyName = "삼성전자",
-                                    jobTitle = "생산직",
-                                    location = "수원시 영통구",
-                                    onClick = { /* 상세 페이지로 이동 */ }
-                                )
-                                JobListComponent(
-                                    companyName = "삼성전자",
-                                    jobTitle = "생산직",
-                                    location = "수원시 영통구",
-                                    onClick = { /* 상세 페이지로 이동 */ }
-                                )
-                                JobListComponent(
-                                    companyName = "삼성전자",
-                                    jobTitle = "생산직",
-                                    location = "수원시 영통구",
-                                    onClick = { /* 상세 페이지로 이동 */ }
-                                )
-                                JobListComponent(
-                                    companyName = "삼성전자",
-                                    jobTitle = "생산직",
-                                    location = "수원시 영통구",
-                                    onClick = { /* 상세 페이지로 이동 */ }
-                                )
+
+                                when {
+                                    isLoading -> {
+                                        CircularProgressIndicator(
+                                            modifier = Modifier.padding(16.dp),
+                                            color = Color(0xFF48582F)
+                                        )
+                                    }
+                                    error != null -> {
+                                        Text(
+                                            text = "데이터를 불러오는데 실패했습니다",
+                                            color = Color.Red,
+                                            modifier = Modifier.padding(16.dp)
+                                        )
+                                    }
+                                    jobList.isEmpty() -> {
+                                        Text(
+                                            text = "표시할 일자리가 없습니다",
+                                            modifier = Modifier.padding(16.dp)
+                                        )
+                                    }
+                                    else -> {
+                                        Column(
+                                            modifier = Modifier
+                                                .fillMaxWidth(),
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            jobList.forEach { job ->
+                                                JobListComponent(
+                                                    companyName = job.companyName,
+                                                    jobTitle = job.jobTitle,
+                                                    location = job.workAddr,
+                                                    onClick = {
+                                                        if (job.hmUrl != null) {
+                                                            // URL이 있는 경우 브라우저 실행
+                                                            if (!job.hmUrl.startsWith("https://")) {
+                                                                job.hmUrl = "https://${job.hmUrl}"
+                                                            }
+                                                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(job.hmUrl))
+                                                            context.startActivity(intent)
+                                                        } else {
+                                                            // URL이 없는 경우 알림창 표시
+                                                            Toast.makeText(context, "일자리 상세 페이지가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+                                                        }
+                                                    }
+                                                )
+                                                Spacer(modifier = Modifier.height(8.dp))
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                         1 -> {

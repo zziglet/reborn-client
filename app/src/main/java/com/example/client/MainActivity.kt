@@ -11,7 +11,19 @@ import com.example.client.data.model.viewmodel.JobPostViewModelFactory
 import com.example.client.data.repository.MainOnBoardingRepository
 import com.example.client.data.model.viewmodel.MainOnBoardingViewModel
 import com.example.client.data.model.viewmodel.MainOnBoardingViewModelFactory
+import com.example.client.data.model.viewmodel.MyPageViewModel
+import com.example.client.data.model.viewmodel.MyPageViewModelFactory
+import com.example.client.data.model.viewmodel.mypage.EditInterestedViewModel
+import com.example.client.data.model.viewmodel.mypage.EditInterestedViewModelFactory
+import com.example.client.data.model.viewmodel.mypage.EditProfileViewModel
+import com.example.client.data.model.viewmodel.mypage.EditProfileViewModelFactory
+import com.example.client.data.model.viewmodel.mypage.EditRegionViewModel
+import com.example.client.data.model.viewmodel.mypage.EditRegionViewModelFactory
 import com.example.client.data.repository.JobPostRepository
+import com.example.client.data.repository.MyPageRepository
+import com.example.client.data.repository.mypage.EditInterestedRepository
+import com.example.client.data.repository.mypage.EditProfileRepository
+import com.example.client.data.repository.mypage.EditRegionRepository
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +36,10 @@ class MainActivity : ComponentActivity() {
         val repositories = AppRepositories(
             mainOnBoardingRepository = MainOnBoardingRepository(apiService),
             jobPostRepository = JobPostRepository(apiService),
+            myPageRepository = MyPageRepository(apiService),
+            editInterestedRepository = EditInterestedRepository(apiService),
+            editRegionRepository = EditRegionRepository(apiService),
+            editProfileRepository = EditProfileRepository(apiService),
             // 필요한 다른 repository 추가
         )
 
@@ -35,6 +51,18 @@ class MainActivity : ComponentActivity() {
             jobPostViewModel = ViewModelProvider(this,
                 JobPostViewModelFactory(repositories.jobPostRepository)
             ).get(JobPostViewModel::class.java),
+            myPageViewModel = ViewModelProvider(this,
+                MyPageViewModelFactory(repositories.myPageRepository)
+            ).get(MyPageViewModel::class.java),
+            editInterestedViewModel = ViewModelProvider(this,
+                EditInterestedViewModelFactory(repositories.editInterestedRepository)
+            ).get(EditInterestedViewModel::class.java),
+            editRegionViewModel = ViewModelProvider(this,
+                EditRegionViewModelFactory(repositories.editRegionRepository)
+            ).get(EditRegionViewModel::class.java),
+            editProfileViewModel = ViewModelProvider(this,
+                EditProfileViewModelFactory(repositories.editProfileRepository)
+            ).get(EditProfileViewModel::class.java),
             // 필요한 다른 viewModel 추가
         )
 
@@ -47,7 +75,11 @@ class MainActivity : ComponentActivity() {
 // Repository들을 담는 데이터 클래스
 data class AppRepositories(
     val mainOnBoardingRepository: MainOnBoardingRepository,
-    val jobPostRepository: JobPostRepository
+    val jobPostRepository: JobPostRepository,
+    val myPageRepository: MyPageRepository,
+    val editInterestedRepository: EditInterestedRepository,
+    val editRegionRepository: EditRegionRepository,
+    val editProfileRepository: EditProfileRepository
     // 필요한 다른 repository 추가
 )
 
@@ -55,5 +87,9 @@ data class AppRepositories(
 data class AppViewModels(
     val mainOnBoardingViewModel: MainOnBoardingViewModel,
     val jobPostViewModel: JobPostViewModel,
+    val myPageViewModel: MyPageViewModel,
+    val editInterestedViewModel: EditInterestedViewModel,
+    val editRegionViewModel: EditRegionViewModel,
+    val editProfileViewModel: EditProfileViewModel,
     // 필요한 다른 viewModel 추가
 )

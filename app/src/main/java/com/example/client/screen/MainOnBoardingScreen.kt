@@ -170,7 +170,10 @@ fun MainOnboardingScreen(mainOnBoardingViewModel: MainOnBoardingViewModel = view
                                 additionalAnswers[1],
                                 selectedJobFields.map { it.name } // 직업 필드를 배열로 전달
                             )
-                            // todo : 컴포넌트 상태 값 받아서 마지막 질문일 경우 제출 버튼 기능 구현
+                            TestUserInfo.REGION = additionalAnswers[1]
+                            TestUserInfo.INTEREST = selectedJobFields.map { it.name }
+                            TestUserInfo.EMPLOYMENT = additionalAnswers[0]
+
                             navController.navigate("Main")
                         }
                     }

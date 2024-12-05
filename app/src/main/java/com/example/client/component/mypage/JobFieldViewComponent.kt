@@ -1,8 +1,10 @@
-package com.example.client.component.all
+package com.example.client.component.mypage
+
+import com.example.client.component.all.JobField
+import com.example.client.component.all.getJobFields
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -20,11 +22,8 @@ import androidx.compose.ui.unit.sp
 import com.example.client.R
 
 @Composable
-fun JobFieldComponent(onFieldsSelected: (List<JobField>) -> Unit) {
-
+fun JobFieldViewComponent(selectedFields: List<String>) {
     val jobFields = getJobFields()
-
-    val selectedFields = remember { mutableStateListOf<JobField>() }
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -33,7 +32,7 @@ fun JobFieldComponent(onFieldsSelected: (List<JobField>) -> Unit) {
     ) {
         items(jobFields.size) { index ->
             val jobField = jobFields[index]
-            val isSelected = selectedFields.contains(jobField)
+            val isSelected = selectedFields.contains(jobField.name)
             val backgroundColor = if (isSelected) Color(0xFF48582F) else Color.Transparent
 
             Box(modifier = Modifier
@@ -44,14 +43,6 @@ fun JobFieldComponent(onFieldsSelected: (List<JobField>) -> Unit) {
                     shape = RoundedCornerShape(size = 20.dp)
                 )
                 .background(backgroundColor, shape = RoundedCornerShape(size = 20.dp))
-                .clickable {
-                    if (isSelected) {
-                        selectedFields.remove(jobField) // 이미 선택된 경우 선택 해제
-                    } else {
-                        selectedFields.add(jobField) // 선택되지 않은 경우 추가
-                    }
-                    onFieldsSelected(selectedFields) // 선택된 필드 리스트를 전달
-                }
                 .padding(10.dp),
                 contentAlignment = Alignment.Center) {
                 Text(

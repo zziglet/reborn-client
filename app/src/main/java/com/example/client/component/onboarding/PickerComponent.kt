@@ -26,12 +26,11 @@ data class MenuItem(
 
 @Composable
 fun PickerComponent(onSubMenuSelected: (String?) -> Unit) {
-    // 메뉴 데이터 정의
     val menuData = listOf(
-        MenuItem("서울", listOf("광진구", "용산구", "강동구", "강북구", "마포구", "중구")),
-        MenuItem("경기", listOf("수원시", "화성시", "안양시", "부천시", "고양시")),
-        MenuItem("전라", listOf("전주시", "광주", "순천시")),
-        MenuItem("강원", listOf("춘천시", "원주시", "강릉시"))
+        MenuItem("서울", listOf("강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구")),
+        MenuItem("경기", listOf("고양시", "광주시", "부천시", "성남시", "수원시", "안양시", "화성시")),
+        MenuItem("전라", listOf("광주시", "순천시", "전주시")),
+        MenuItem("강원", listOf("강릉시", "원주시", "춘천시"))
     )
 
     var selectedMenu by remember { mutableStateOf<MenuItem?>(null) }

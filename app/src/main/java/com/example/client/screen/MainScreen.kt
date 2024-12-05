@@ -36,20 +36,21 @@ import com.example.client.domain.TestUserInfo
 
 
 @Composable
-fun MainScreen(navController: NavController){
+fun MainScreen(navController: NavController) {
     var nickname by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
         nickname = TestUserInfo.TEST_USERNAME
     }
 
-    Column (
-        modifier = Modifier.fillMaxSize()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
             .background(color = Color(0xFFFFFBDC))
-    ){
+    ) {
         Row(
             modifier = Modifier.padding(start = 15.dp, top = 40.dp)
-        ){
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.icon_rebornlogo),
                 contentDescription = "Icon_rebornlogo",
@@ -60,18 +61,21 @@ fun MainScreen(navController: NavController){
         }
         Row(
             modifier = Modifier.padding(top = 10.dp, start = 20.dp)
-        ){
+        ) {
             val greetingText = buildAnnotatedString {
                 append(nickname ?: "사용자")
                 addStyle(
                     SpanStyle(fontFamily = FontFamily(Font(R.font.pretendardextrabold))),
                     start = 0,
-                    end = (nickname?.length ?: 3)) // "님," 포함
+                    end = (nickname?.length ?: 3)
+                ) // "님," 포함
 
                 append("님,\n안녕하세요 !")
-                addStyle(SpanStyle(fontFamily = FontFamily(Font(R.font.pretendardregular))),
+                addStyle(
+                    SpanStyle(fontFamily = FontFamily(Font(R.font.pretendardregular))),
                     start = (nickname?.length ?: 4) + 3,
-                    end = (nickname?.length ?: 4) + 8)
+                    end = (nickname?.length ?: 4) + 8
+                )
             }
 
             Text(
@@ -88,7 +92,7 @@ fun MainScreen(navController: NavController){
                 modifier = Modifier
                     .width(129.dp)
                     .height(69.dp)
-                    .clickable {  }
+                    .clickable { }
             )
 
         }
@@ -104,8 +108,8 @@ fun MainScreen(navController: NavController){
                 painter = painterResource(id = R.drawable.btn_community),
                 contentDescription = "Btn_editprofile",
                 modifier = Modifier
-                    .padding(top=20.dp, start = 10.dp)
-                    .clickable {  }
+                    .padding(top = 20.dp, start = 10.dp)
+                    .clickable { }
             )
             Column(
 
@@ -114,15 +118,21 @@ fun MainScreen(navController: NavController){
                     painter = painterResource(id = R.drawable.btn_job),
                     contentDescription = "Btn_job",
                     modifier = Modifier
-                        .padding(top=20.dp, start = 5.dp)
-                        .clickable { navController.navigate("JobOnboarding") }
+                        .padding(top = 20.dp, start = 5.dp)
+                        .clickable {
+                            if (TestUserInfo.sex.isNullOrEmpty()) {
+                                navController.navigate("JobOnboarding")
+                            } else {
+                                navController.navigate("JobMain")
+                            }
+                        }
                 )
                 Image(
                     painter = painterResource(id = R.drawable.btn_user),
                     contentDescription = "Btn_job",
                     modifier = Modifier
-                        .padding(top=5.dp, start = 5.dp)
-                        .clickable {  }
+                        .padding(top = 5.dp, start = 5.dp)
+                        .clickable { }
                         .size(width = 160.dp, height = 140.dp)
                         .fillMaxWidth()
                 )
@@ -136,7 +146,7 @@ fun MainScreen(navController: NavController){
                 .height(493.dp)
                 .padding(top = 25.dp)
                 .background(color = Color(0xFFFFFBDC), shape = RoundedCornerShape(size = 40.dp))
-        ){
+        ) {
             //추후에 데이터 가져올 것
             Column {
                 Text(
@@ -151,15 +161,15 @@ fun MainScreen(navController: NavController){
                     fontFamily = FontFamily(Font(R.font.pretendardextrabold)),
                     fontSize = 24.sp,
                     color = Color(0xFF000000),
-                    modifier = Modifier.padding(start = 32.dp, top=10.dp)
+                    modifier = Modifier.padding(start = 32.dp, top = 10.dp)
                 )
             }
             Icon(
                 painter = painterResource(id = R.drawable.btn_chevrons_right),
                 contentDescription = "Btn_chevrons",
                 modifier = Modifier
-                    .padding(top=43.dp, start = 5.dp)
-                    .clickable {  },
+                    .padding(top = 43.dp, start = 5.dp)
+                    .clickable { },
                 tint = Color(0xFF93B65E)
             )
         }

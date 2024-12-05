@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,12 +39,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.client.R
+import com.example.client.data.model.viewmodel.MyPageViewModel
 import com.example.client.domain.TestUserInfo
 
 // [todo]: login view 출력
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(
+    myPageViewModel: MyPageViewModel,
+    navController: NavController) {
     val context = LocalContext.current
+
+    val user by myPageViewModel.user.collectAsState()
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -149,7 +155,20 @@ fun LoginScreen(navController: NavController) {
             Button(
                 onClick = {
                     if (username == TestUserInfo.TEST_USERNAME && password == TestUserInfo.TEST_PASSWORD) {
-                        navController.navigate("MainOnboarding")
+                        myPageViewModel.getUser()
+                        TestUserInfo.USERIMG = user?.profileImg ?: ""
+                        TestUserInfo.REGION = user?.region ?: ""
+                        TestUserInfo.INTEREST = user?.interestedField ?: listOf()
+                        TestUserInfo.EMPLOYMENT = user?.employmentStatus ?: ""
+                        TestUserInfo.REBORNTEMPERATURE = user?.rebornTemperature ?: 0
+                        //todo: 자격증 받아오기
+                        println(TestUserInfo.USERIMG)
+
+                        if(TestUserInfo.EMPLOYMENT == "" || TestUserInfo.INTEREST.isEmpty() || TestUserInfo.REGION == ""){
+                            navController.navigate("MainOnboarding")
+                        }else{
+                            navController.navigate("Main")
+                        }
                     } else {
                         Toast.makeText(context,"로그인 실패",Toast.LENGTH_SHORT).show()
                     }

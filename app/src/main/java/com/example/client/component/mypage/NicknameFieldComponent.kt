@@ -37,6 +37,7 @@ fun NicknameFieldComponent(userName: String, onCancel: (String) -> Unit) {
     )
     Spacer(modifier = Modifier.size(10.dp))
     Row(
+        modifier = Modifier.width(320.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -45,8 +46,11 @@ fun NicknameFieldComponent(userName: String, onCancel: (String) -> Unit) {
             onValueChange = { nicknameText = it },
             placeholder = { Text(userName) },
             modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.LightGray, shape = RoundedCornerShape(8.dp)),
+                .fillMaxWidth(),
+            textStyle = TextStyle(
+                fontSize = 18.sp,
+                fontFamily = FontFamily(Font(R.font.pretendardregular)),
+            ),
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color.White,
                 focusedContainerColor = Color.White,

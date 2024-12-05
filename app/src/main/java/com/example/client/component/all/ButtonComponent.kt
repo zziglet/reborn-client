@@ -17,7 +17,8 @@ import androidx.compose.ui.unit.sp
 
 enum class ButtonColorEnum(val color: Color) {
     LightGreen(Color(0xFF93B65E)),
-    Green(Color(0xFF47572F))
+    Green(Color(0xFF47572F)),
+    Gray(Color(0xFFD9D9D9))
 }
 
 @Composable

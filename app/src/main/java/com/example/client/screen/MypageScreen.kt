@@ -2,6 +2,7 @@ package com.example.client.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,18 +14,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -34,26 +39,34 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.example.client.R
 import com.example.client.component.all.ButtonColorEnum
 import com.example.client.component.all.ButtonComponent
-import com.example.client.component.all.CertificateComponent
-import com.example.client.component.all.JobFieldComponent
 import com.example.client.component.mypage.CertificateItemComponent
-import com.example.client.component.mypage.Qualification
+import com.example.client.component.mypage.JobFieldViewComponent
 import com.example.client.component.mypage.RebornTemperatureComponent
 import com.example.client.data.model.viewmodel.SharedCertificationViewModel
+import com.example.client.data.model.response.LicenseResponse
+import com.example.client.data.model.viewmodel.MyPageViewModel
 import com.example.client.domain.TestUserInfo
+import java.util.Date
 
 @Composable
 fun MyPageScreen(
+    myPageViewModel: MyPageViewModel,
     sharedCertificationViewModel: SharedCertificationViewModel,
     navController: NavController
 ) {
     var nickname by remember { mutableStateOf<String?>(null) }
+    val user by myPageViewModel.user.collectAsState()
 
     LaunchedEffect(Unit) {
         nickname = TestUserInfo.TEST_USERNAME
+        myPageViewModel.getUser()
+        TestUserInfo.USERIMG = user?.profileImg ?: TestUserInfo.USERIMG
     }
 
     LazyColumn(
@@ -88,8 +101,7 @@ fun MyPageScreen(
         item {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp),
+                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -106,35 +118,57 @@ fun MyPageScreen(
 
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
-                // todo : 사용자 닉네임 수정
                 Icon(
                     painter = painterResource(id = R.drawable.rounded_edit_square_24),
                     contentDescription = null,
                     modifier = Modifier.padding(top = 20.dp, start = 300.dp)
+                        .clickable {
+                            navController.navigate("MyPageProfile")
+                        }
                 )
 
-                // todo : 사용자 현 재직 상태 표시
-                Text(
-                    text = "재직 중",
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        lineHeight = 33.6.sp,
-                        fontFamily = FontFamily(Font(R.font.pretendardregular)),
-                        fontWeight = FontWeight(600),
-                        color = Color(0xFF000000),
-                        textAlign = TextAlign.Center,
-                    ),
-                    modifier = Modifier.padding(bottom = 5.dp)
-                )
+                user?.let {
+                    Text(
+                        text = it.employmentStatus,
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            lineHeight = 33.6.sp,
+                            fontFamily = FontFamily(Font(R.font.pretendardregular)),
+                            fontWeight = FontWeight(600),
+                            color = Color(0xFF000000),
+                            textAlign = TextAlign.Center,
+                        ),
+                        modifier = Modifier.padding(bottom = 5.dp)
+                    )
+                }
 
-                Image(
-                    painter = painterResource(id = R.drawable.icon_rebornlogo),
-                    contentDescription = "Icon_rebornlogo",
-                    modifier = Modifier
-                        .width(108.dp)
-                        .height(83.dp)
-                        .padding(bottom = 5.dp)
-                )
+                if (!user?.profileImg.isNullOrEmpty()) {
+                    // 프로필 이미지가 있는 경우
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(user?.profileImg)
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = "Profile Image",
+                        modifier = Modifier
+                            .width(83.dp)
+                            .height(83.dp)
+                            .clip(CircleShape),
+                        error = painterResource(id = R.drawable.icon_rebornlogo),  // 이미지 로드 실패시 기본 이미지
+                        placeholder = painterResource(id = R.drawable.icon_rebornlogo)  // 로딩 중 표시할 이미지
+                    )
+                } else {
+                    // 프로필 이미지가 없는 경우 기본 이미지 표시
+                    Image(
+                        painter = painterResource(id = R.drawable.icon_rebornlogo),
+                        contentDescription = "Icon_rebornlogo",
+                        modifier = Modifier
+                            .width(108.dp)
+                            .height(83.dp)
+                            .padding(bottom = 5.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.size(10.dp))
 
                 nickname?.let {
                     Text(
@@ -150,14 +184,16 @@ fun MyPageScreen(
                         modifier = Modifier.padding(bottom = 10.dp)
                     )
                 }
-                RebornTemperatureComponent(modifier = Modifier.padding(bottom = 20.dp))
+                RebornTemperatureComponent(temperature = (user?.rebornTemperature ?: 1) * 0.01f, modifier = Modifier.padding(bottom = 20.dp))
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
-                //todo: 관심 분야 수정 아이콘
                 Icon(
                     painter = painterResource(id = R.drawable.rounded_edit_square_24),
                     contentDescription = null,
                     modifier = Modifier.padding(top = 20.dp, start = 300.dp)
+                        .clickable {
+                            navController.navigate("MyPageInterest")
+                        }
                 )
 
                 Text(
@@ -171,14 +207,18 @@ fun MyPageScreen(
                     )
                 )
 
-                JobFieldComponent { }
+                JobFieldViewComponent(
+                    selectedFields = user?.interestedField ?: emptyList()
+                )
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
-                // todo: 나의 동네 수정 아이콘
                 Icon(
                     painter = painterResource(id = R.drawable.rounded_edit_square_24),
                     contentDescription = null,
                     modifier = Modifier.padding(top = 20.dp, start = 300.dp)
+                        .clickable {
+                            navController.navigate("MyPageRegion")
+                        }
                 )
 
                 Text(
@@ -193,9 +233,7 @@ fun MyPageScreen(
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
 
-                ButtonComponent(
-                    buttonText = "화양동", buttonColorType = ButtonColorEnum.Green, onClick = {}
-                )
+                user?.let { ButtonComponent(buttonText = it.region, buttonColorType = ButtonColorEnum.Green) { } }
                 Spacer(modifier = Modifier.size(30.dp))
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
@@ -217,11 +255,18 @@ fun MyPageScreen(
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
                 Spacer(modifier = Modifier.size(15.dp))
-                val sample = Qualification(
-                    title = "문화해설사",
-                    date = "2022.03.24"
-                )
-                CertificateItemComponent(qualification = sample)
+
+                user?.licenses?.forEach { license ->
+                    CertificateItemComponent(
+                        license = LicenseResponse(
+                            jmfldnm = license.jmfldnm,
+                            seriesnm = license.seriesnm,
+                            //todo: 자격증 Date 추가
+                            date = Date()
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
                 Spacer(modifier = Modifier.size(30.dp))
             }
         }

@@ -20,14 +20,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.client.R
-
-data class Qualification(
-    val title: String,
-    val date: String
-)
+import com.example.client.data.model.response.LicenseResponse
 
 @Composable
-fun CertificateItemComponent(qualification: Qualification) {
+fun CertificateItemComponent(license: LicenseResponse) {
 
     ListItem(
         modifier = Modifier.fillMaxWidth()
@@ -39,7 +35,7 @@ fun CertificateItemComponent(qualification: Qualification) {
                 contentAlignment = Alignment.Center // 중앙 정렬
             ) {
                 Text(
-                    text = qualification.title,
+                    text = license.jmfldnm,
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontFamily = FontFamily(Font(R.font.pretendardregular)),
@@ -67,7 +63,7 @@ fun CertificateItemComponent(qualification: Qualification) {
                 contentAlignment = Alignment.Center // 중앙 정렬
             ) {
                 Text(
-                    text = qualification.date,
+                    text = license.date.toString(),
                     style = TextStyle(
                         fontSize = 14.sp,
                         fontFamily = FontFamily(Font(R.font.pretendardregular)),
@@ -81,13 +77,14 @@ fun CertificateItemComponent(qualification: Qualification) {
 
 }
 
-@Preview(showBackground = true)
-@Composable
-fun CertificateItemComponent() {
-    val sample = Qualification(
-        title = "문화해설사",
-        date = "2022.03.24"
-    )
-
-    CertificateItemComponent(qualification = sample)
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun CertificateItemComponent() {
+//    val sample = LicenseResponse(
+//        jmfldnm = "문화해설사",
+//        seriesnm = "기술사",
+//        date = "2022.03.24"
+//    )
+//
+//    CertificateItemComponent(license = sample)
+//}

@@ -11,6 +11,7 @@ import com.example.client.screen.MainScreen
 import com.example.client.screen.MainOnboardingScreen
 import com.example.client.screen.MyPageScreen
 import com.example.client.screen.mypage.EditInterestedFieldScreen
+import com.example.client.screen.mypage.EditRegionScreen
 
 @Composable
 fun NavigationHost(
@@ -20,7 +21,7 @@ fun NavigationHost(
     NavHost(
         navController = navController,
         //todo: 커밋하기 전에 여기 바꾸기
-        startDestination = NavRoutes.Login.route
+        startDestination = NavRoutes.MyPage.route
     ) {
         composable(NavRoutes.Login.route) {
             LoginScreen(navController)
@@ -54,6 +55,13 @@ fun NavigationHost(
         composable(NavRoutes.MyPageInterest.route) {
             EditInterestedFieldScreen(
                 editInterestedViewModel = viewModels.editInterestedViewModel,
+                navController = navController
+            )
+        }
+
+        composable(NavRoutes.MyPageRegion.route) {
+            EditRegionScreen(
+                editRegionViewModel = viewModels.editRegionViewModel,
                 navController = navController
             )
         }

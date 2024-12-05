@@ -124,7 +124,6 @@ fun MyPageScreen(
                     modifier = Modifier.padding(top = 20.dp, start = 300.dp)
                 )
 
-                // todo : 사용자 현 재직 상태 표시
                 user?.let {
                     Text(
                         text = it.employmentStatus,
@@ -184,7 +183,6 @@ fun MyPageScreen(
                 RebornTemperatureComponent(temperature = (user?.rebornTemperature ?: 1) * 0.01f, modifier = Modifier.padding(bottom = 20.dp))
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
-                //todo: 관심 분야 수정 아이콘
                 Icon(
                     painter = painterResource(id = R.drawable.rounded_edit_square_24),
                     contentDescription = null,
@@ -210,11 +208,13 @@ fun MyPageScreen(
                 )
                 HorizontalDivider(thickness = 1.dp, color = Color(0xFF48582F))
 
-                // todo: 나의 동네 수정 아이콘
                 Icon(
                     painter = painterResource(id = R.drawable.rounded_edit_square_24),
                     contentDescription = null,
                     modifier = Modifier.padding(top = 20.dp, start = 300.dp)
+                        .clickable {
+                            navController.navigate("MyPageRegion")
+                        }
                 )
 
                 Text(

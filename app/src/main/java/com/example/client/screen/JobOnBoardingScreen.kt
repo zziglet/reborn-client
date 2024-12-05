@@ -356,7 +356,6 @@ fun JobOnBoardingScreen(
                                 currentQuestionIndex = 3
 
                             } else if (selectedCertificateAnswer == certificateField[1]) { // 보유한 자격증 없음
-                                // Todo: nav
                                 navController.navigate(NavRoutes.JobMain.route) {
                                     popUpTo(NavRoutes.JobOnboarding.route) { inclusive = true }
                                 }
@@ -527,9 +526,9 @@ fun JobOnBoardingScreen(
                             val year = selectBirth?.toInt()
                             if (sex != null && year != null) {
                                 viewModel.submitJobOnboarding(sex, year)
-                                // Todo : User Info 에 정보 저장
-
-                                // Todo : 일자리 메인으로 이동
+                                TestUserInfo.sex=sex
+                                TestUserInfo.year=year
+                                TestUserInfo.licenses=selectedLicenses.map { it.jmfldnm }
                                 navController.navigate(NavRoutes.JobMain.route) {
                                     popUpTo(NavRoutes.JobOnboarding.route) { inclusive = true }
                                 }

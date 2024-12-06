@@ -25,13 +25,15 @@ enum class ButtonColorEnum(val color: Color) {
 fun ButtonComponent(
     buttonText: String,
     buttonColorType: ButtonColorEnum,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = buttonColorType.color),
         shape = RoundedCornerShape(20.dp),
         modifier = Modifier
+            .then(modifier)
             .height(50.dp)
             .width(288.dp)
             .padding(4.dp)

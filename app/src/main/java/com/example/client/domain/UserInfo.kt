@@ -8,6 +8,9 @@ object TestUserInfo {
     var REGION = ""
     var REBORNTEMPERATURE = 0
     var EMPLOYMENT = ""
+    var sex:String?=null
+    var year:Int?=null
+    var licenses:List<String> = emptyList()
 }
 
 //object UserInfo {

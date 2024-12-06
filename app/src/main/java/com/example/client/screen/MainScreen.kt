@@ -42,7 +42,7 @@ import com.example.client.domain.TestUserInfo
 
 
 @Composable
-fun MainScreen(navController: NavController){
+fun MainScreen(navController: NavController) {
 
     var nickname by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
@@ -51,13 +51,14 @@ fun MainScreen(navController: NavController){
         nickname = TestUserInfo.TEST_USERNAME
     }
 
-    Column (
-        modifier = Modifier.fillMaxSize()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
             .background(color = Color(0xFFFFFBDC))
-    ){
+    ) {
         Row(
             modifier = Modifier.padding(start = 15.dp, top = 40.dp)
-        ){
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.icon_rebornlogo),
                 contentDescription = "Icon_rebornlogo",
@@ -67,19 +68,22 @@ fun MainScreen(navController: NavController){
             )
         }
         Row(
-            modifier = Modifier.padding(start = 20.dp)
-        ){
+            modifier = Modifier.padding(top = 10.dp, start = 20.dp)
+        ) {
             val greetingText = buildAnnotatedString {
                 append(nickname ?: "사용자")
                 addStyle(
                     SpanStyle(fontFamily = FontFamily(Font(R.font.pretendardextrabold))),
                     start = 0,
-                    end = (nickname?.length ?: 3)) // "님," 포함
+                    end = (nickname?.length ?: 3)
+                ) // "님," 포함
 
                 append("님,\n안녕하세요 !")
-                addStyle(SpanStyle(fontFamily = FontFamily(Font(R.font.pretendardregular))),
+                addStyle(
+                    SpanStyle(fontFamily = FontFamily(Font(R.font.pretendardregular))),
                     start = (nickname?.length ?: 4) + 3,
-                    end = (nickname?.length ?: 4) + 8)
+                    end = (nickname?.length ?: 4) + 8
+                )
             }
 
             Text(
@@ -138,9 +142,13 @@ fun MainScreen(navController: NavController){
                     painter = painterResource(id = R.drawable.btn_job),
                     contentDescription = "Btn_job",
                     modifier = Modifier
-                        .padding(top=20.dp, start = 5.dp)
+                        .padding(top = 20.dp, start = 5.dp)
                         .clickable {
-                            navController.navigate("JobMain")
+                            if (TestUserInfo.sex.isNullOrEmpty()) {
+                                navController.navigate("JobOnboarding")
+                            } else {
+                                navController.navigate("JobMain")
+                            }
                         }
                 )
                 Image(

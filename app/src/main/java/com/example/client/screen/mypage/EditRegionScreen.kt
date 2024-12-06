@@ -107,11 +107,12 @@ fun EditRegionScreen(
                 Spacer(modifier = Modifier.height(20.dp))
                 ButtonComponent(
                     buttonText = "완료",
-                    buttonColorType = if (selectedAnswer != "") ButtonColorEnum.Green else ButtonColorEnum.Gray
-                ) {
-                    editRegionViewModel.setUserRegion(selectedAnswer)
-                    navController.navigate("MyPage")
-                }
+                    buttonColorType = if (selectedAnswer != "") ButtonColorEnum.Green else ButtonColorEnum.Gray,
+                    onClick = {
+                        editRegionViewModel.setUserRegion(selectedAnswer)
+                        navController.navigate("MyPage")
+                    }
+                )
             }
         }
     }

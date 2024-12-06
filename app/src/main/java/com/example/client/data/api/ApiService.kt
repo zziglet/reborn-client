@@ -1,8 +1,10 @@
 package com.example.client.data.api
 
 import com.example.client.data.model.request.JobPostLicenseRequest
+import com.example.client.data.model.request.JobOnBoardingRequest
 import com.example.client.data.model.request.KakaoLoginRequest
 import com.example.client.data.model.request.MainOnBoardingRequest
+import com.example.client.data.model.response.LicensesGetResponse
 import com.example.client.data.model.request.mypage.EditInterestedRequest
 import com.example.client.data.model.request.mypage.EditProfileRequest
 import com.example.client.data.model.request.mypage.EditRegionRequest
@@ -25,7 +27,7 @@ interface ApiService {
     suspend fun submitOnboarding(@Body request: MainOnBoardingRequest): Response<Void>
 
     @POST("users/onboarding/jobs")
-    suspend fun submitJobOnboarding(): Response<Void>
+    suspend fun submitJobOnboarding(@Body request: JobOnBoardingRequest): Response<Void>
 
     /** 일자리 */
     @GET("jobs/posts")
@@ -39,7 +41,7 @@ interface ApiService {
 
     /** 자격증 리스트 소환 */
     @GET("licenses")
-    suspend fun getLicenses(): Response<Void>
+    suspend fun getLicenses(): Response<List<LicensesGetResponse>>
 
     /** 마이페이지 */
     @GET("users/mypage")

@@ -6,11 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
 import com.example.client.data.api.RetrofitClient
+import com.example.client.data.model.viewmodel.JobOnBoardingViewModel
+import com.example.client.data.model.viewmodel.JobOnBoardingViewModelFactory
 import com.example.client.data.model.viewmodel.JobPostViewModel
 import com.example.client.data.model.viewmodel.JobPostViewModelFactory
 import com.example.client.data.repository.MainOnBoardingRepository
 import com.example.client.data.model.viewmodel.MainOnBoardingViewModel
 import com.example.client.data.model.viewmodel.MainOnBoardingViewModelFactory
+import com.example.client.data.model.viewmodel.SharedCertificationViewModel
+import com.example.client.data.model.viewmodel.SharedCertificationViewModelFactory
+import com.example.client.data.repository.JobOnBoardingRepository
 import com.example.client.data.model.viewmodel.MyPageViewModel
 import com.example.client.data.model.viewmodel.MyPageViewModelFactory
 import com.example.client.data.model.viewmodel.mypage.EditInterestedViewModel
@@ -36,6 +41,7 @@ class MainActivity : ComponentActivity() {
         val repositories = AppRepositories(
             mainOnBoardingRepository = MainOnBoardingRepository(apiService),
             jobPostRepository = JobPostRepository(apiService),
+            jobOnBoardingRepository = JobOnBoardingRepository(apiService),
             myPageRepository = MyPageRepository(apiService),
             editInterestedRepository = EditInterestedRepository(apiService),
             editRegionRepository = EditRegionRepository(apiService),
@@ -45,12 +51,23 @@ class MainActivity : ComponentActivity() {
 
         // 모든 ViewModel 초기화
         val viewModels = AppViewModels(
-            mainOnBoardingViewModel = ViewModelProvider(this, 
-                MainOnBoardingViewModelFactory(repositories.mainOnBoardingRepository))
+            mainOnBoardingViewModel = ViewModelProvider(
+                this,
+                MainOnBoardingViewModelFactory(repositories.mainOnBoardingRepository)
+            )
                 .get(MainOnBoardingViewModel::class.java),
-            jobPostViewModel = ViewModelProvider(this,
+            jobPostViewModel = ViewModelProvider(
+                this,
                 JobPostViewModelFactory(repositories.jobPostRepository)
             ).get(JobPostViewModel::class.java),
+            jobOnBoardingViewModel = ViewModelProvider(
+                this,
+                JobOnBoardingViewModelFactory(repositories.jobOnBoardingRepository)
+            ).get(JobOnBoardingViewModel::class.java),
+            sharedCertificationViewModel = ViewModelProvider(
+                this,
+                SharedCertificationViewModelFactory(repositories.jobOnBoardingRepository)
+            ).get(SharedCertificationViewModel::class.java),
             myPageViewModel = ViewModelProvider(this,
                 MyPageViewModelFactory(repositories.myPageRepository)
             ).get(MyPageViewModel::class.java),
@@ -76,6 +93,7 @@ class MainActivity : ComponentActivity() {
 data class AppRepositories(
     val mainOnBoardingRepository: MainOnBoardingRepository,
     val jobPostRepository: JobPostRepository,
+    val jobOnBoardingRepository: JobOnBoardingRepository,
     val myPageRepository: MyPageRepository,
     val editInterestedRepository: EditInterestedRepository,
     val editRegionRepository: EditRegionRepository,
@@ -87,6 +105,8 @@ data class AppRepositories(
 data class AppViewModels(
     val mainOnBoardingViewModel: MainOnBoardingViewModel,
     val jobPostViewModel: JobPostViewModel,
+    val jobOnBoardingViewModel: JobOnBoardingViewModel,
+    val sharedCertificationViewModel: SharedCertificationViewModel,
     val myPageViewModel: MyPageViewModel,
     val editInterestedViewModel: EditInterestedViewModel,
     val editRegionViewModel: EditRegionViewModel,

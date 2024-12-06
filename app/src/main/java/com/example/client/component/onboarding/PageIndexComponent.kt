@@ -13,9 +13,12 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun PageIndexComponent(
     currentPage: Int,
-    totalPage: Int
+    totalPage: Int,
+    modifier: Modifier = Modifier
 ) {
-    Row(modifier = Modifier.padding(8.dp)) {
+    Row(modifier = Modifier
+        .then(modifier)
+        .padding(8.dp)) {
         Text(
             text = "$currentPage",
             fontSize = 24.sp,

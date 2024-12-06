@@ -114,11 +114,12 @@ fun EditInterestedFieldScreen(
                 Spacer(modifier = Modifier.height(20.dp))
                 ButtonComponent(
                     buttonText = "완료",
-                    buttonColorType = if (selectedFieldsCount > 0) ButtonColorEnum.Green else ButtonColorEnum.Gray
-                ) { 
-                    editInterestedViewModel.setUserInterests(selectedFields)
-                    navController.navigate("MyPage")
-                }
+                    buttonColorType = if (selectedFieldsCount > 0) ButtonColorEnum.Green else ButtonColorEnum.Gray,
+                    onClick = {
+                        editInterestedViewModel.setUserInterests(selectedFields)
+                        navController.navigate("MyPage")
+                    }
+                )
             }
         }
     }

@@ -27,16 +27,22 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun DropDownMenuComponent(
-    list: List<String>
+    list: List<String>,
+    onItemSelected: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val expandStatus = remember { mutableStateOf(false) }
     val itemPosition = remember { mutableIntStateOf(0) }
 
-    Box {
+    Box(
+        modifier = Modifier
+            .then(modifier)
+    ) {
         DropDownBox(
-            modifier = Modifier.clickable {
-                expandStatus.value = true
-            },
+            modifier = Modifier
+                .clickable {
+                    expandStatus.value = true
+                },
             text = list[itemPosition.intValue]
         )
         DropdownMenu(
@@ -59,6 +65,7 @@ fun DropDownMenuComponent(
                     onClick = {
                         expandStatus.value = false
                         itemPosition.intValue = index
+                        onItemSelected(item)
                     },
                     modifier = Modifier
                         .background(
@@ -78,7 +85,7 @@ fun DropDownBox(
     Box(
         modifier = Modifier
             .then(modifier)
-            .size(width = 240.dp, height = 40.dp)
+            .size(width = 300.dp, height = 50.dp)
             .background(
                 color = Color.White,
                 shape = RoundedCornerShape(10.dp)
@@ -108,6 +115,7 @@ fun DropDownBox(
 @Composable
 fun DropDownMenuPreview() {
     DropDownMenuComponent(
+        onItemSelected = {},
         list = listOf(
             "1960",
             "1961",

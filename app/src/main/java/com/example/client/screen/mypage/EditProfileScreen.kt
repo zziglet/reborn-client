@@ -49,11 +49,6 @@ import com.example.client.domain.TestUserInfo
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
 
 @Composable
 fun EditProfileScreen(
@@ -174,24 +169,25 @@ fun EditProfileScreen(
                 Spacer(modifier = Modifier.height(30.dp))
                 ButtonComponent(
                     buttonText = "완료",
-                    buttonColorType = if (editNickname != "" || editEmploymentStatus != "" || selectedImageUri != null) 
-                        ButtonColorEnum.Green else ButtonColorEnum.Gray
-                ) {
-                    selectedImageUri?.let { uri ->
-                        editProfileViewModel.setUserProfile(
-                            nickName = editNickname,
-                            profileImg = uri.toString(),  // URI 문자열로 전달
-                            employmentStatus = editEmploymentStatus
-                        )
-                    } ?: run {
-                        editProfileViewModel.setUserProfile(
-                            nickName = editNickname,
-                            profileImg = TestUserInfo.USERIMG,
-                            employmentStatus = editEmploymentStatus
-                        )
+                    buttonColorType = if (editNickname != "" || editEmploymentStatus != "" || selectedImageUri != null)
+                        ButtonColorEnum.Green else ButtonColorEnum.Gray,
+                    onClick = {
+                        selectedImageUri?.let { uri ->
+                            editProfileViewModel.setUserProfile(
+                                nickName = editNickname,
+                                profileImg = uri.toString(),  // URI 문자열로 전달
+                                employmentStatus = editEmploymentStatus
+                            )
+                        } ?: run {
+                            editProfileViewModel.setUserProfile(
+                                nickName = editNickname,
+                                profileImg = TestUserInfo.USERIMG,
+                                employmentStatus = editEmploymentStatus
+                            )
+                        }
+                        navController.navigate("MyPage")
                     }
-                    navController.navigate("MyPage")
-                }
+                )
             }
         }
     }
